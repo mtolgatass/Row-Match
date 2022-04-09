@@ -110,12 +110,9 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            if (row != transform.position.y)
-            {
-                tempPosition = new Vector2(column, transform.position.y);
-                transform.position = tempPosition;
-                board.allTiles[column, row] = this.gameObject;
-            }
+            tempPosition = new Vector2(column, transform.position.y);
+            transform.position = tempPosition;
+            board.allTiles[column, row] = this.gameObject;
         }
     }
 
@@ -128,12 +125,9 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            if (column != transform.position.x)
-            {
-                tempPosition = new Vector2(transform.position.x, row);
-                transform.position = tempPosition;
-                board.allTiles[column, row] = this.gameObject;
-            }
+            tempPosition = new Vector2(transform.position.x, row);
+            transform.position = tempPosition;
+            board.allTiles[column, row] = this.gameObject;
         }
     }
 
