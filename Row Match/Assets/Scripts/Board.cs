@@ -25,7 +25,7 @@ public class Board : MonoBehaviour
     {
         gameBoard = new BackgroundTile[width, height];
         allTiles = new GameObject[width, height];
-        Configure();
+        ConfigureTiles();
     }
 
     void Update()
@@ -37,7 +37,7 @@ public class Board : MonoBehaviour
     }
 
     // MARK: - Private Functions
-    private void Configure()
+    private void ConfigureTiles()
     {
         for (int i = 0; i < width; i ++)
         {
