@@ -14,6 +14,8 @@ public class Tile : MonoBehaviour
     private Vector2 tempPosition;
     private float swipeAngle = 0;
 
+    public string color = "r";
+
     void Start()
     {
         board = FindObjectOfType<Board>();
@@ -24,7 +26,7 @@ public class Tile : MonoBehaviour
 
     void Update()
     {
-        performChanges();
+        PerformChanges();
     }
 
     // MARK: - Private Functions
@@ -68,6 +70,8 @@ public class Tile : MonoBehaviour
             // Swipe Down
             SwipeDownAction();
         }
+        int[] parameter = { row, destinationTile.GetComponent<Tile>().row };
+        board.FindMatches(parameter);
     }
 
     // MARK: - Private Swipe Functions
@@ -101,7 +105,7 @@ public class Tile : MonoBehaviour
 
     // MARK: - Private Perform Change Functions
 
-    private void checkAndPerformHorizontalChanges()
+    private void CheckAndPerformHorizontalChanges()
     {
         if (Mathf.Abs(column - transform.position.x) > .1)
         {
@@ -116,7 +120,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    private void checkAndPerformVerticalChanges()
+    private void CheckAndPerformVerticalChanges()
     {
         if (Mathf.Abs(row - transform.position.y) > .1)
         {
@@ -131,9 +135,9 @@ public class Tile : MonoBehaviour
         }
     }
 
-    private void performChanges()
+    private void PerformChanges()
     {
-        checkAndPerformHorizontalChanges();
-        checkAndPerformVerticalChanges();
+        CheckAndPerformHorizontalChanges();
+        CheckAndPerformVerticalChanges();
     }
 }
