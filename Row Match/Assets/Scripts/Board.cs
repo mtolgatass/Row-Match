@@ -8,21 +8,24 @@ public class Board : MonoBehaviour
     // MARK: - Private Variables
     private BackgroundTile[,] gameBoard;
     private bool matchFound = false;
-    private List<int> matchedRows = new List<int>();
+    private List<int> matchedRows = new List<int>(); //TODO: MATCHED ROWS ARE HERE
+    private List<string> grid = new List<string>();
 
     // MARK: - Public Variables
+    public LevelProvider levelProvider;
+    public TileProvider tileProvider;
     public int width;
     public int height;
+    public int moveCount;
     public GameObject tilePrefab;
-    public GameObject[] tiles;
     public GameObject[,] allTiles;
     public bool swipeApplied = false;
     public int[] possibleMatchRows;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        FetchLevelInfo(1);
         gameBoard = new BackgroundTile[width, height];
         allTiles = new GameObject[width, height];
         ConfigureTiles();
@@ -37,22 +40,31 @@ public class Board : MonoBehaviour
     }
 
     // MARK: - Private Functions
+    private void FetchLevelInfo(int levelNo)
+    {
+        List<int> levelInfo = levelProvider.RequestLevelInfo(levelNo);
+        width = levelInfo[0];
+        height = levelInfo[1];
+        moveCount = levelInfo[2];
+        grid = levelProvider.GetGrid();
+    }
+
     private void ConfigureTiles()
     {
+        int indexForGrid = 0;
         for (int i = 0; i < width; i ++)
         {
             for (int j = 0; j < height; j ++)
             {
                 Vector2 tempPosition = new Vector2(i, j);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) ;
+                GameObject backgroundTile = tileProvider.DeliverTile("background", tempPosition);
                 backgroundTile.transform.parent = this.transform;
-                backgroundTile.name = "Background ( " + i + ", " + j + " )";
 
-                int index = Random.Range(0, tiles.Length);
-                GameObject tile = Instantiate(tiles[index], tempPosition, Quaternion.identity);
+                GameObject tile = tileProvider.DeliverTile(grid[indexForGrid], tempPosition);
                 tile.transform.parent = this.transform;
-                tile.name = "Tile ( " + i + ", " + j + " )";
+
                 allTiles[i, j] = tile;
+                indexForGrid++;
             }
         }
     }

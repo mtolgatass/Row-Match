@@ -13,6 +13,7 @@ public class Tile : MonoBehaviour
     private Vector2 finalTouchCoordinates;
     private Vector2 tempPosition;
     private float swipeAngle = 0;
+    private float swipeResist = .1f;
 
     public string color = "r";
 
@@ -44,8 +45,11 @@ public class Tile : MonoBehaviour
 
     private void CalculateAngle()
     {
-        swipeAngle = Mathf.Atan2(finalTouchCoordinates.y - firstTouchCoordinates.y, finalTouchCoordinates.x - firstTouchCoordinates.x) * 180 / Mathf.PI;
-        MoveTile();
+        if (Mathf.Abs(finalTouchCoordinates.y - firstTouchCoordinates.y) > swipeResist || Mathf.Abs(finalTouchCoordinates.x - firstTouchCoordinates.x) > swipeResist)
+        {
+            swipeAngle = Mathf.Atan2(finalTouchCoordinates.y - firstTouchCoordinates.y, finalTouchCoordinates.x - firstTouchCoordinates.x) * 180 / Mathf.PI;
+            MoveTile();
+        }
     }
 
     private void MoveTile()
@@ -70,8 +74,10 @@ public class Tile : MonoBehaviour
             // Swipe Down
             SwipeDownAction();
         }
+
         int[] parameter = { row, destinationTile.GetComponent<Tile>().row };
         board.FindMatches(parameter);
+        board.moveCount -= 1;
     }
 
     // MARK: - Private Swipe Functions

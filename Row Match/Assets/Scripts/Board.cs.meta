@@ -3,7 +3,10 @@ guid: 6634be1f1594d4651a3a8efee6d911b0
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - tilePrefab: {instanceID: 0}
+  - dictionaryTextFile: {fileID: 4900000, guid: 2d3776c6fc3164e56aa05e1708f7a47c,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
