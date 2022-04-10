@@ -16,6 +16,7 @@ public class Tile : MonoBehaviour
     private float swipeAngle = 0;
     private float swipeResist = .1f;
 
+    // MARK: - Public Variables
     public string color = "r";
     public bool canSwipe = true;
 
@@ -123,7 +124,7 @@ public class Tile : MonoBehaviour
         if (canSwipe && canDestionationSwap)
         {
             destinationTileRow = destinationTile.GetComponent<Tile>().row;
-            destinationTileRow -= 1;
+            destinationTileRow += 1;
             destinationTile.GetComponent<Tile>().row += 1;
             row -= 1;
         }

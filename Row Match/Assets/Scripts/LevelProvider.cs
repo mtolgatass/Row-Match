@@ -6,8 +6,10 @@ using System;
 
 public class LevelProvider : MonoBehaviour
 {
+    // MARK: - Public Variables
     public TextAsset[] levels;
 
+    // MARK: - Private Variables
     private List<string> grid = new List<string>();
     private int moveCount;
     private int width;
@@ -24,6 +26,7 @@ public class LevelProvider : MonoBehaviour
 
     }
 
+    // MARK: - Public Functions
     public List<int> RequestLevelInfo(int levelNo)
     {
         List<int> returnList = new List<int>();
@@ -45,6 +48,7 @@ public class LevelProvider : MonoBehaviour
         return grid;
     }
 
+    // MARK: - Private Functions
     private int GetBoardWidth(string fromLine)
     {
         string[] line = Regex.Split(fromLine, "grid_width: ");
