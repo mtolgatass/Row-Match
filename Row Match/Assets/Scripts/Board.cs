@@ -20,7 +20,6 @@ public class Board : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject[,] allTiles;
     public bool swipeApplied = false;
-    public int[] possibleMatchRows;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +68,16 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void DisableMovement(int forRow)
+    {
+        for (int i = 0; i < width; i ++)
+        {
+            GameObject tile = allTiles[i, forRow];
+            Debug.Log("Tile To Disable: " + tile.GetComponent<Tile>().color);
+            tile.GetComponent<Tile>().canSwipe = false;
+        }
+    }
+
     // MARK: - Public Functions
     public void FindMatches(int[] forRow)
     {
@@ -83,9 +92,10 @@ public class Board : MonoBehaviour
             itemList = itemList.Distinct().ToList();
             if (itemList.Count() == 1)
             {
-                Debug.Log("ITS A MATCH AT ROW: " + i);
+                Debug.Log("ITS A MATCH AT ROW: " + forRow[i]);
                 matchFound = true;
-                matchedRows.Add(i);
+                matchedRows.Add(forRow[i]);
+                DisableMovement(forRow[i]);
             }
         }
     }

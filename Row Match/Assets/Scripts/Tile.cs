@@ -8,6 +8,7 @@ public class Tile : MonoBehaviour
     private int column;
     private int row;
     private GameObject destinationTile;
+    private int destinationTileRow;
     private Board board;
     private Vector2 firstTouchCoordinates;
     private Vector2 finalTouchCoordinates;
@@ -16,6 +17,7 @@ public class Tile : MonoBehaviour
     private float swipeResist = .1f;
 
     public string color = "r";
+    public bool canSwipe = true;
 
     void Start()
     {
@@ -56,27 +58,21 @@ public class Tile : MonoBehaviour
     {
         if (swipeAngle > -45 && swipeAngle <= 45 && column + 1 < board.width)
         {
-            // Swipe Right
             SwipeRightAction();
         }
         else if (swipeAngle > 45 && swipeAngle <= 135 && row + 1 < board.height)
         {
-            // Swipe Up
             SwipeUpAction();
         }
         else if ((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
         {
-            // Swipe Left
             SwipeLeftAction();
         }
         else if (swipeAngle < -45 && swipeAngle >= -135 && row > 0)
         {
-            // Swipe Down
             SwipeDownAction();
         }
 
-        int[] parameter = { row, destinationTile.GetComponent<Tile>().row };
-        board.FindMatches(parameter);
         board.moveCount -= 1;
     }
 
@@ -84,29 +80,53 @@ public class Tile : MonoBehaviour
     private void SwipeRightAction()
     {
         destinationTile = board.allTiles[column + 1, row];
-        destinationTile.GetComponent<Tile>().column -= 1;
-        column += 1;
+
+        bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
+        if (canSwipe && canDestionationSwap)
+        {
+            destinationTile.GetComponent<Tile>().column -= 1;
+            column += 1;
+        }
     }
 
     private void SwipeLeftAction()
     {
         destinationTile = board.allTiles[column - 1, row];
-        destinationTile.GetComponent<Tile>().column += 1;
-        column -= 1;
+
+        bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
+        if (canSwipe && canDestionationSwap)
+        {
+            destinationTile.GetComponent<Tile>().column += 1;
+            column -= 1;
+        }
     }
 
     private void SwipeUpAction()
     {
         destinationTile = board.allTiles[column, row + 1];
-        destinationTile.GetComponent<Tile>().row -= 1;
-        row += 1;
+
+        bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
+        if (canSwipe && canDestionationSwap)
+        {
+            destinationTileRow = destinationTile.GetComponent<Tile>().row;
+            destinationTileRow -= 1;
+            destinationTile.GetComponent<Tile>().row -= 1;
+            row += 1;
+        }
     }
 
     private void SwipeDownAction()
     {
         destinationTile = board.allTiles[column, row - 1];
-        destinationTile.GetComponent<Tile>().row += 1;
-        row -= 1;
+
+        bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
+        if (canSwipe && canDestionationSwap)
+        {
+            destinationTileRow = destinationTile.GetComponent<Tile>().row;
+            destinationTileRow -= 1;
+            destinationTile.GetComponent<Tile>().row += 1;
+            row -= 1;
+        }
     }
 
     // MARK: - Private Perform Change Functions
@@ -117,12 +137,15 @@ public class Tile : MonoBehaviour
         {
             tempPosition = new Vector2(column, transform.position.y);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
+            int[] parameter = { row };
+            board.FindMatches(parameter);
         }
         else
         {
             tempPosition = new Vector2(column, transform.position.y);
             transform.position = tempPosition;
             board.allTiles[column, row] = this.gameObject;
+
         }
     }
 
@@ -132,12 +155,15 @@ public class Tile : MonoBehaviour
         {
             tempPosition = new Vector2(transform.position.x, row);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
+            int[] parameter = { row, destinationTileRow };
+            board.FindMatches(parameter);
         }
         else
         {
             tempPosition = new Vector2(transform.position.x, row);
             transform.position = tempPosition;
             board.allTiles[column, row] = this.gameObject;
+
         }
     }
 
