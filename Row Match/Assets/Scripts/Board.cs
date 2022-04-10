@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 public class Board : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Board : MonoBehaviour
     private BackgroundTile[,] gameBoard;
     private bool matchFound = false;
     private List<int> matchedRows = new List<int>(); //TODO: MATCHED ROWS ARE HERE
+    private List<string> matchedColors = new List<string>();
     private List<string> grid = new List<string>();
 
     // MARK: - Public Variables
@@ -17,6 +19,7 @@ public class Board : MonoBehaviour
     public int width;
     public int height;
     public int moveCount;
+    public int score;
     public GameObject[,] allTiles;
     public bool swipeApplied = false;
 
@@ -71,9 +74,38 @@ public class Board : MonoBehaviour
     {
         for (int i = 0; i < width; i ++)
         {
+            Vector2 tempPosition = new Vector2(i, row);
             GameObject tile = allTiles[i, row];
             tile.GetComponent<Tile>().canSwipe = false;
+            GameObject completedTile = tileProvider.DeliverTile("background", tempPosition);
+            tile = completedTile;
         }
+    }
+
+    private void AddScore(string color)
+    {
+        if (color == "y")
+        {
+            score += 250;
+        }
+        else if (color == "r")
+        {
+            score += 100;
+        }
+        else if (color == "g")
+        {
+            score += 150;
+        }
+        else if (color == "b")
+        {
+            score += 200;
+        }
+        else
+        {
+            score += 0;
+        }
+
+        Debug.Log("SCORE IS: " + score);
     }
 
     // MARK: - Public Functions
@@ -96,6 +128,7 @@ public class Board : MonoBehaviour
                     matchFound = true;
                     matchedRows.Add(forRow[i]);
                     DisableMovement(forRow[i]);
+                    AddScore(itemList[0]);
                 }
             }
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileProvider : MonoBehaviour
 {
+    // MARK: - Public Variables
     public GameObject[] tiles;
     public GameObject tilePrefab;
 
@@ -19,6 +20,7 @@ public class TileProvider : MonoBehaviour
         
     }
 
+    // MARK: - Public Functions
     public GameObject DeliverTile(string color, Vector2 position)
     {
         if (color == "y")
@@ -39,6 +41,7 @@ public class TileProvider : MonoBehaviour
         }
     }
 
+    // MARK: - Private Functions
     private GameObject DeliverBackgroundTile(Vector2 position)
     {
         GameObject backgroundTile = Instantiate(tilePrefab, position, Quaternion.identity);
