@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8040280039007101538}
   - component: {fileID: -2473341367288150191}
   - component: {fileID: -1350613199736858406}
+  - component: {fileID: 8761181758183456122}
   m_Layer: 0
   m_Name: YellowTile
   m_TagString: Untagged
@@ -111,5 +112,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75706e1acb2ba4eae8ae1763f634cf76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleTransform: {fileID: 3882108436773617081}
+  sphereRenderer: {fileID: 8040280039007101538}
   color: r
   canSwipe: 1
+--- !u!50 &8761181758183456122
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6031909770049257729}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

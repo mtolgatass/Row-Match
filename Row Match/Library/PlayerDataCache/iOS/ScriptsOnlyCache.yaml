@@ -39,7 +39,7 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 49
       Script: {instanceID: 0}
-    - Class: 54
+    - Class: 50
       Script: {instanceID: 0}
     - Class: 58
       Script: {instanceID: 0}
@@ -372,7 +372,7 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: 68be924b3b8b4263ae90e059fff09418
+      Hash: 51b9884b45182ebad0921630054cedfa
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Tile
@@ -504,7 +504,7 @@ ScriptsOnlyBuild:
     className: TestRunCallbackListener
   - hash:
       serializedVersion: 2
-      Hash: 62c4861bfb61510200bfd45cc7d990b4
+      Hash: b508d9c46809157595abbbeeb9ade935
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Board
@@ -558,13 +558,13 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: b2f63344586048095984b40ecdbfa6af
+      Hash: f3771b5e30c41949ff793dee88003258
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ScoreCounter
   - hash:
       serializedVersion: 2
-      Hash: 5201a6dec303458bae27cd491c3ced37
+      Hash: 75eb19d0071517548238dac91e008321
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MoveCounter

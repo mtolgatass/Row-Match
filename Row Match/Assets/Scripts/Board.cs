@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Board : MonoBehaviour
     private List<int> matchedRows = new List<int>(); //TODO: MATCHED ROWS ARE HERE
     private List<string> matchedColors = new List<string>();
     private List<string> grid = new List<string>();
+    private int rowToAnimate;
 
     // MARK: - Public Variables
     public ScoreCounter scoreCounter;
@@ -37,6 +39,8 @@ public class Board : MonoBehaviour
     {
         if (matchFound)
         {
+            MoveMatchedRowUp();
+            matchFound = false;
         }
     }
 
@@ -99,9 +103,20 @@ public class Board : MonoBehaviour
                     matchFound = true;
                     matchedRows.Add(forRow[i]);
                     DisableMovement(forRow[i]);
-                    scoreCounter.IncreaseScore(itemList[0]); 
+                    scoreCounter.IncreaseScore(itemList[0]);
+                    rowToAnimate = forRow[i];
                 }
             }
+        }
+    }
+
+    private void MoveMatchedRowUp()
+    {
+        for (int j = 0; j < width; j++)
+        {
+            allTiles[j, rowToAnimate].GetComponent<Tile>().sphereRenderer.sortingOrder = 2;
+            allTiles[j, rowToAnimate].GetComponent<Tile>().transform.DOMoveY(10f, 3);
+            allTiles[j, rowToAnimate].GetComponent<Tile>().sphereRenderer.sortingOrder = 0;
         }
     }
 }

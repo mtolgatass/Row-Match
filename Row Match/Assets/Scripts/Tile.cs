@@ -17,6 +17,8 @@ public class Tile : MonoBehaviour
     private float swipeResist = .1f;
 
     // MARK: - Public Variables
+    public Transform circleTransform;
+    public Renderer sphereRenderer;
     public string color = "r";
     public bool canSwipe = true;
 
@@ -73,8 +75,6 @@ public class Tile : MonoBehaviour
         {
             SwipeDownAction();
         }
-
-        board.moveCounter.DecreaseMoveCount();
     }
 
     // MARK: - Private Swipe Functions
@@ -87,6 +87,7 @@ public class Tile : MonoBehaviour
         {
             destinationTile.GetComponent<Tile>().column -= 1;
             column += 1;
+            board.moveCounter.DecreaseMoveCount();
         }
     }
 
@@ -99,6 +100,7 @@ public class Tile : MonoBehaviour
         {
             destinationTile.GetComponent<Tile>().column += 1;
             column -= 1;
+            board.moveCounter.DecreaseMoveCount();
         }
     }
 
@@ -113,6 +115,7 @@ public class Tile : MonoBehaviour
             destinationTileRow -= 1;
             destinationTile.GetComponent<Tile>().row -= 1;
             row += 1;
+            board.moveCounter.DecreaseMoveCount();
         }
     }
 
@@ -127,6 +130,7 @@ public class Tile : MonoBehaviour
             destinationTileRow += 1;
             destinationTile.GetComponent<Tile>().row += 1;
             row -= 1;
+            board.moveCounter.DecreaseMoveCount();
         }
     }
 
@@ -137,7 +141,7 @@ public class Tile : MonoBehaviour
         if (Mathf.Abs(column - transform.position.x) > .1)
         {
             tempPosition = new Vector2(column, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .2f);
 
             int[] parameter = { row };
             board.FindMatches(parameter);
