@@ -14,14 +14,15 @@ public class Board : MonoBehaviour
     private List<string> grid = new List<string>();
 
     // MARK: - Public Variables
+    public ScoreCounter scoreCounter;
+    public MoveCounter moveCounter;
     public LevelProvider levelProvider;
     public TileProvider tileProvider;
+
     public int width;
     public int height;
     public int moveCount;
-    public int score;
     public GameObject[,] allTiles;
-    public bool swipeApplied = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,6 @@ public class Board : MonoBehaviour
     {
         if (matchFound)
         {
-            Debug.Log(matchedRows[0]);
         }
     }
 
@@ -77,35 +77,7 @@ public class Board : MonoBehaviour
             Vector2 tempPosition = new Vector2(i, row);
             GameObject tile = allTiles[i, row];
             tile.GetComponent<Tile>().canSwipe = false;
-            GameObject completedTile = tileProvider.DeliverTile("background", tempPosition);
-            tile = completedTile;
         }
-    }
-
-    private void AddScore(string color)
-    {
-        if (color == "y")
-        {
-            score += 250;
-        }
-        else if (color == "r")
-        {
-            score += 100;
-        }
-        else if (color == "g")
-        {
-            score += 150;
-        }
-        else if (color == "b")
-        {
-            score += 200;
-        }
-        else
-        {
-            score += 0;
-        }
-
-        Debug.Log("SCORE IS: " + score);
     }
 
     // MARK: - Public Functions
@@ -124,11 +96,10 @@ public class Board : MonoBehaviour
             {
                 if (!(matchedRows.Contains(forRow[i])))
                 {
-                    Debug.Log("ITS A MATCH AT ROW: " + forRow[i]);
                     matchFound = true;
                     matchedRows.Add(forRow[i]);
                     DisableMovement(forRow[i]);
-                    AddScore(itemList[0]);
+                    scoreCounter.IncreaseScore(itemList[0]); 
                 }
             }
         }
