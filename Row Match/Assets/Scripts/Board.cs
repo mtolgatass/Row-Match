@@ -10,7 +10,7 @@ public class Board : MonoBehaviour
     // MARK: - Private Variables
     private BackgroundTile[,] gameBoard;
     private bool matchFound = false;
-    private List<int> matchedRows = new List<int>(); //TODO: MATCHED ROWS ARE HERE
+    private List<int> matchedRows = new List<int>();
     private List<string> matchedColors = new List<string>();
     private List<string> grid = new List<string>();
     private int rowToAnimate;
@@ -20,6 +20,10 @@ public class Board : MonoBehaviour
     public MoveCounter moveCounter;
     public LevelProvider levelProvider;
     public TileProvider tileProvider;
+    public float animationDuration;
+    public float completeRowAnimationDuration;
+    public Ease moveRowUpAnimationEase;
+    public Ease completeRowAnimationEase;
 
     public int width;
     public int height;
@@ -74,16 +78,6 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void DisableMovement(int row)
-    {
-        for (int i = 0; i < width; i ++)
-        {
-            Vector2 tempPosition = new Vector2(i, row);
-            GameObject tile = allTiles[i, row];
-            tile.GetComponent<Tile>().canSwipe = false;
-        }
-    }
-
     // MARK: - Public Functions
     public void FindMatches(int[] forRow)
     {
@@ -102,7 +96,6 @@ public class Board : MonoBehaviour
                 {
                     matchFound = true;
                     matchedRows.Add(forRow[i]);
-                    DisableMovement(forRow[i]);
                     scoreCounter.IncreaseScore(itemList[0]);
                     rowToAnimate = forRow[i];
                 }
@@ -112,11 +105,31 @@ public class Board : MonoBehaviour
 
     private void MoveMatchedRowUp()
     {
-        for (int j = 0; j < width; j++)
+        for (int i = 0; i < width; i++)
         {
-            allTiles[j, rowToAnimate].GetComponent<Tile>().sphereRenderer.sortingOrder = 2;
-            allTiles[j, rowToAnimate].GetComponent<Tile>().transform.DOMoveY(10f, 3);
-            allTiles[j, rowToAnimate].GetComponent<Tile>().sphereRenderer.sortingOrder = 0;
+            GameObject tile = allTiles[i, rowToAnimate];
+            tile.GetComponent<Tile>().sphereRenderer.sortingOrder = 2;
+            tile.GetComponent<Tile>().transform
+                .DOMoveY(10f, animationDuration)
+                .SetEase(moveRowUpAnimationEase)
+                .OnStepComplete(()=> { Destroy(tile); } );
+            PlaceCompleteRow(i, rowToAnimate);
         }
+    }
+
+    private void PlaceCompleteRow(int row, int column)
+    {
+        Vector2 tempPosition = new Vector2(row, column);
+        GameObject tileToDestroy = allTiles[row, column];
+        GameObject completeTile = tileProvider.DeliverTile("complete", tempPosition);
+        completeTile.transform.parent = this.transform;
+        completeTile.GetComponent<Tile>().canSwipe = false;
+        allTiles[row, column] = completeTile;
+
+        float destination = column + 1f;
+
+        completeTile.GetComponent<Tile>().transform
+                .DOLocalMoveY(destination, completeRowAnimationDuration)
+                .SetEase(completeRowAnimationEase);
     }
 }

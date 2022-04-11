@@ -35,7 +35,11 @@ public class TileProvider : MonoBehaviour
         } else if(color == "b")
         {
             return DeliverBlueTile(position);
-        } else
+        } else if (color == "complete")
+        {
+            return DeliverCompleteTile(position);
+        }
+        else
         {
             return DeliverBackgroundTile(position);
         }
@@ -53,7 +57,7 @@ public class TileProvider : MonoBehaviour
     {
         GameObject tile = Instantiate(tiles[0], position, Quaternion.identity);
         tile.GetComponent<Tile>().color = "y";
-        tile.name = "Yellow Tile";
+        tile.name = "Yellow Tile At Column: " + position.x + " Row; " + position.y;
         return tile;
     }
 
@@ -61,7 +65,7 @@ public class TileProvider : MonoBehaviour
     {
         GameObject tile = Instantiate(tiles[1], position, Quaternion.identity);
         tile.GetComponent<Tile>().color = "r";
-        tile.name = "Red Tile";
+        tile.name = "Red Tile At Column: " + position.x + " Row; " + position.y;
         return tile;
     }
 
@@ -69,7 +73,7 @@ public class TileProvider : MonoBehaviour
     {
         GameObject tile = Instantiate(tiles[2], position, Quaternion.identity);
         tile.GetComponent<Tile>().color = "g";
-        tile.name = "Green Tile";
+        tile.name = "Green Tile At Column: " + position.x + " Row; " + position.y;
         return tile;
     }
 
@@ -77,7 +81,16 @@ public class TileProvider : MonoBehaviour
     {
         GameObject tile = Instantiate(tiles[3], position, Quaternion.identity);
         tile.GetComponent<Tile>().color = "b";
-        tile.name = "Blue Tile";
+        tile.name = "Blue Tile At Column: " + position.x + " Row; " + position.y;
+        return tile;
+    }
+
+    private GameObject DeliverCompleteTile(Vector2 position)
+    {
+        GameObject tile = Instantiate(tiles[4], position, Quaternion.identity);
+        tile.GetComponent<Tile>().color = "c";
+        //tile.GetComponent<Tile>().canSwipe = false;
+        tile.name = "Complete Tile At Column: " + position.x + " Row; " + position.y;
         return tile;
     }
 }

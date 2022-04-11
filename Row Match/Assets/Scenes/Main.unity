@@ -328,6 +328,7 @@ MonoBehaviour:
   - {fileID: 5293131068971108165, guid: 19349f9d410b2412c8647d7f748d0adf, type: 3}
   - {fileID: 868326169388736369, guid: 6d7f2d34336b14dd58aed9de7da4133b, type: 3}
   - {fileID: 8924746962092756883, guid: 9ce526acfd53948c59d5a34e2c49bbc0, type: 3}
+  - {fileID: 8924746962092756883, guid: b8cb2b2ef6e5b4fcb8e010ffe4f6a763, type: 3}
   tilePrefab: {fileID: 7238994683663724018, guid: d3ca02facfbbc481198a4d264aac6d81,
     type: 3}
 --- !u!4 &349973111
@@ -471,8 +472,12 @@ MonoBehaviour:
   moveCounter: {fileID: 1322604269}
   levelProvider: {fileID: 637511767}
   tileProvider: {fileID: 349973110}
-  width: 4
-  height: 8
+  animationDuration: 3
+  completeRowAnimationDuration: 3
+  moveRowUpAnimationEase: 2
+  completeRowAnimationEase: 29
+  width: 0
+  height: 0
 --- !u!4 &513908014
 Transform:
   m_ObjectHideFlags: 0

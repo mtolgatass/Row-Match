@@ -5,8 +5,6 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     // MARK: - Private Variables
-    private int column;
-    private int row;
     private GameObject destinationTile;
     private int destinationTileRow;
     private Board board;
@@ -17,6 +15,8 @@ public class Tile : MonoBehaviour
     private float swipeResist = .1f;
 
     // MARK: - Public Variables
+    public int column;
+    public int row;
     public Transform circleTransform;
     public Renderer sphereRenderer;
     public string color = "r";
@@ -50,8 +50,10 @@ public class Tile : MonoBehaviour
 
     private void CalculateAngle()
     {
+        Debug.Log("LETS HOLD ON");
         if (Mathf.Abs(finalTouchCoordinates.y - firstTouchCoordinates.y) > swipeResist || Mathf.Abs(finalTouchCoordinates.x - firstTouchCoordinates.x) > swipeResist)
         {
+            Debug.Log("LETS GO");
             swipeAngle = Mathf.Atan2(finalTouchCoordinates.y - firstTouchCoordinates.y, finalTouchCoordinates.x - firstTouchCoordinates.x) * 180 / Mathf.PI;
             MoveTile();
         }
@@ -83,6 +85,7 @@ public class Tile : MonoBehaviour
         destinationTile = board.allTiles[column + 1, row];
 
         bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
+
         if (canSwipe && canDestionationSwap)
         {
             destinationTile.GetComponent<Tile>().column -= 1;
@@ -96,8 +99,10 @@ public class Tile : MonoBehaviour
         destinationTile = board.allTiles[column - 1, row];
 
         bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
+
         if (canSwipe && canDestionationSwap)
         {
+
             destinationTile.GetComponent<Tile>().column += 1;
             column -= 1;
             board.moveCounter.DecreaseMoveCount();
@@ -111,6 +116,8 @@ public class Tile : MonoBehaviour
         bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
         if (canSwipe && canDestionationSwap)
         {
+            
+
             destinationTileRow = destinationTile.GetComponent<Tile>().row;
             destinationTileRow -= 1;
             destinationTile.GetComponent<Tile>().row -= 1;
@@ -126,6 +133,7 @@ public class Tile : MonoBehaviour
         bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
         if (canSwipe && canDestionationSwap)
         {
+
             destinationTileRow = destinationTile.GetComponent<Tile>().row;
             destinationTileRow += 1;
             destinationTile.GetComponent<Tile>().row += 1;
