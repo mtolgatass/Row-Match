@@ -355,10 +355,9 @@ GameObject:
   - component: {fileID: 352320354}
   - component: {fileID: 352320356}
   - component: {fileID: 352320355}
-  - component: {fileID: 352320358}
   - component: {fileID: 352320357}
   m_Layer: 5
-  m_Name: ScoreCount
+  m_Name: ScoreCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -437,25 +436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScore: 0
-  textTransform: {fileID: 352320354}
   text: {fileID: 352320355}
   duration: 3
---- !u!54 &352320358
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352320353}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &513908012
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,7 +473,6 @@ MonoBehaviour:
   tileProvider: {fileID: 349973110}
   width: 4
   height: 8
-  moveCount: 0
 --- !u!4 &513908014
 Transform:
   m_ObjectHideFlags: 0
@@ -734,7 +715,7 @@ GameObject:
   - component: {fileID: 1322604267}
   - component: {fileID: 1322604269}
   m_Layer: 5
-  m_Name: MoveCount
+  m_Name: MoveCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -814,7 +795,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3d355963af34196a35cb7c4c48ad79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMoveCount: 0
+  text: {fileID: 1322604267}
+  duration: 5
 --- !u!1 &1624680346
 GameObject:
   m_ObjectHideFlags: 0

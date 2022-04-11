@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class ScoreCounter : MonoBehaviour
 {
+    // MARK: - Public Variables
     public int currentScore = 0;
-
-    public Transform textTransform;
     public Text text;
     public float duration;
 
@@ -22,6 +21,12 @@ public class ScoreCounter : MonoBehaviour
     {
     }
 
+    public void SetInitialScore()
+    {
+        IncreaseScore("");
+    }
+
+    // MARK: - Public Functions
     public void IncreaseScore(string color)
     {
         int increaseScoreBy = 0;
@@ -49,14 +54,18 @@ public class ScoreCounter : MonoBehaviour
         UpdateScore(increaseScoreBy);
     }
 
+    // MARK: - Private Functions
     private void UpdateScore(int increaseBy)
     {
         int destinationScore = currentScore + increaseBy;
         if (currentScore != (destinationScore))
         {
-            Debug.Log("Current score is: " + currentScore + " Incresing to: " + destinationScore);
             DOVirtual.Int(currentScore, destinationScore, duration,(v)=>text.text = v.ToString());
             currentScore = destinationScore;
+        } else
+        {
+            text.text = currentScore.ToString();
+            currentScore = increaseBy;
         }
     }
 

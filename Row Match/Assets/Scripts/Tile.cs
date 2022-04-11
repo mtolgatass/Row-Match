@@ -74,7 +74,7 @@ public class Tile : MonoBehaviour
             SwipeDownAction();
         }
 
-        board.moveCount -= 1;
+        board.moveCounter.DecreaseMoveCount();
     }
 
     // MARK: - Private Swipe Functions
@@ -138,6 +138,7 @@ public class Tile : MonoBehaviour
         {
             tempPosition = new Vector2(column, transform.position.y);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
+
             int[] parameter = { row };
             board.FindMatches(parameter);
         }
@@ -156,6 +157,7 @@ public class Tile : MonoBehaviour
         {
             tempPosition = new Vector2(transform.position.x, row);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
+
             int[] parameter = { row, destinationTileRow };
             board.FindMatches(parameter);
         }

@@ -21,7 +21,6 @@ public class Board : MonoBehaviour
 
     public int width;
     public int height;
-    public int moveCount;
     public GameObject[,] allTiles;
 
     // Start is called before the first frame update
@@ -31,6 +30,7 @@ public class Board : MonoBehaviour
         gameBoard = new BackgroundTile[width, height];
         allTiles = new GameObject[width, height];
         ConfigureTiles();
+        scoreCounter.SetInitialScore();
     }
 
     void Update()
@@ -46,7 +46,7 @@ public class Board : MonoBehaviour
         List<int> levelInfo = levelProvider.RequestLevelInfo(levelNo);
         width = levelInfo[0];
         height = levelInfo[1];
-        moveCount = levelInfo[2];
+        moveCounter.SetMoveCount(levelInfo[2]);
         grid = levelProvider.GetGrid();
     }
 
