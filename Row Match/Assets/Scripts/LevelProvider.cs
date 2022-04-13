@@ -1,29 +1,76 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Networking;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class LevelProvider : MonoBehaviour
 {
     // MARK: - Public Variables
     public TextAsset[] levels;
+    public string[] levelTypes;
+    public int[] levelCounts;
 
     // MARK: - Private Variables
     private List<string> grid = new List<string>();
     private int moveCount;
     private int width;
     private int height;
+    private int downloadedLevelCount = 1;
 
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < levelTypes.Length; i ++)
+        {
+            for (int j = 1; j < levelCounts[i] + 1; j ++)
+            {
+                StartCoroutine(DownloadLevel(levelTypes[i], j));
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator DownloadLevel(string type, int levelIndex)
     {
+        string filePath = Application.persistentDataPath + "/Level" + downloadedLevelCount + ".txt";
+        downloadedLevelCount++;
 
+        string downloadURL = "https://row-match.s3.amazonaws.com/levels/RM_" + type + levelIndex.ToString();
+
+        if (!File.Exists(filePath))
+        {
+            Debug.Log("IM DOWNLOADIIIIINGGGGG");
+            UnityWebRequest www = new UnityWebRequest(downloadURL);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            yield return www.SendWebRequest();
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                // Show results as text
+                Debug.Log(www.downloadHandler.text);
+                // Or retrieve results as binary data
+                byte[] results = www.downloadHandler.data;
+                SaveLevel(results, filePath);
+            }
+        }
+        else
+        {
+            Debug.Log("IM NOOOOOT DOWNLOADIIIIINGGGGG");
+        }
+    }
+
+    private void SaveLevel(byte[] levelInfo, string path)
+    {
+        using (FileStream file = File.Create(path))
+        {
+            new BinaryFormatter().Serialize(file, levelInfo);
+        }
     }
 
     // MARK: - Public Functions
@@ -41,6 +88,11 @@ public class LevelProvider : MonoBehaviour
         GetTilesByOrder(eachLine[4]);
 
         return returnList;
+    }
+
+    private void RequestLevelInfoFromPersistantData()
+    {
+        //TODO
     }
 
     public List<string> GetGrid()
