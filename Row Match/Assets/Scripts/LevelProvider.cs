@@ -11,8 +11,8 @@ public class LevelProvider : MonoBehaviour
 {
     // MARK: - Public Variables
     public TextAsset[] levels;
-    public string[] levelTypes;
-    public int[] levelCounts;
+    public string[] levelTypes = { "A", "B" };
+    public int[] levelCounts = { 15, 10 };
 
     // MARK: - Private Variables
     private List<string> grid = new List<string>();
@@ -24,13 +24,7 @@ public class LevelProvider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < levelTypes.Length; i ++)
-        {
-            for (int j = 1; j < levelCounts[i] + 1; j ++)
-            {
-                StartCoroutine(DownloadLevel(levelTypes[i], j));
-            }
-        }
+        StartDownloadingLevels();
     }
 
     IEnumerator DownloadLevel(string type, int levelIndex)
@@ -42,7 +36,6 @@ public class LevelProvider : MonoBehaviour
 
         if (!File.Exists(filePath))
         {
-            Debug.Log("IM DOWNLOADIIIIINGGGGG");
             UnityWebRequest www = new UnityWebRequest(downloadURL);
             www.downloadHandler = new DownloadHandlerBuffer();
             yield return www.SendWebRequest();
@@ -52,24 +45,9 @@ public class LevelProvider : MonoBehaviour
             }
             else
             {
-                // Show results as text
-                Debug.Log(www.downloadHandler.text);
-                // Or retrieve results as binary data
-                byte[] results = www.downloadHandler.data;
+                string results = www.downloadHandler.text;
                 SaveLevel(results, filePath);
             }
-        }
-        else
-        {
-            Debug.Log("IM NOOOOOT DOWNLOADIIIIINGGGGG");
-        }
-    }
-
-    private void SaveLevel(byte[] levelInfo, string path)
-    {
-        using (FileStream file = File.Create(path))
-        {
-            new BinaryFormatter().Serialize(file, levelInfo);
         }
     }
 
@@ -77,10 +55,15 @@ public class LevelProvider : MonoBehaviour
     public List<int> RequestLevelInfo(int levelNo)
     {
         List<int> returnList = new List<int>();
-        string theWholeFileAsOneLongString = levels[levelNo].text;
         List<string> eachLine = new List<string>();
+
+        string levelInfo = RequestLevelInfoFromPersistantData(levelNo);
+        if (levelInfo == "")
+        {
+            levelInfo = levels[levelNo].text;
+        }
         eachLine.AddRange(
-                    theWholeFileAsOneLongString.Split("\n"[0]));
+                    levelInfo.Split("\n"[0]));
 
         returnList.Add(GetBoardWidth(eachLine[1]));
         returnList.Add(GetBoardHeight(eachLine[2]));
@@ -88,11 +71,6 @@ public class LevelProvider : MonoBehaviour
         GetTilesByOrder(eachLine[4]);
 
         return returnList;
-    }
-
-    private void RequestLevelInfoFromPersistantData()
-    {
-        //TODO
     }
 
     public List<string> GetGrid()
@@ -131,6 +109,45 @@ public class LevelProvider : MonoBehaviour
         for (int i = 0; i < colors.Length; i++)
         {
             grid.Add(colors[i]);
+        }
+    }
+
+    private void StartDownloadingLevels()
+    {
+        for (int i = 0; i < levelTypes.Length; i++)
+        {
+            for (int j = 1; j < levelCounts[i] + 1; j++)
+            {
+                StartCoroutine(DownloadLevel(levelTypes[i], j));
+            }
+        }
+    }
+
+    private void SaveLevel(string levelInfo, string path)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        formatter.Serialize(stream, levelInfo);
+        stream.Close();
+    }
+
+    private string RequestLevelInfoFromPersistantData(int level)
+    {
+        string filePath = Application.persistentDataPath + "/Levels/Level" + level + ".txt";
+
+        if (File.Exists(filePath))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(filePath, FileMode.Open);
+
+            String data = formatter.Deserialize(stream) as String;
+            stream.Close();
+            Debug.Log("THIS IS WHAT I GOT FROM MEMORY" + data);
+            return data;
+        } else
+        {
+            return "";
         }
     }
 }
