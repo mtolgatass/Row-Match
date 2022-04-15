@@ -349,6 +349,7 @@ MonoBehaviour:
   scoreCounter: {fileID: 352320357}
   moveCounter: {fileID: 1322604269}
   levelProvider: {fileID: 637511767}
+  tileProvider: {fileID: 1830375954}
   animationDuration: 3
   completeRowAnimationDuration: 1
   moveRowUpAnimationEase: 2
@@ -541,7 +542,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5663559, g: 0.5589622, b: 0.745283, a: 0}
+  m_BackGroundColor: {r: 0.6415094, g: 0.4750801, b: 0.54165184, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -683,6 +684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1322604267}
   duration: 0.5
+  currentMoveCount: 0
 --- !u!1 &1624680346
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,7 +780,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9f8c1d2b8244d8093697c52f9ab3c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 0}
+  tiles:
+  - {fileID: 6031909770049257729, guid: 3aa7c6e919bef4513a17891631ce1a91, type: 3}
+  - {fileID: 5293131068971108165, guid: 19349f9d410b2412c8647d7f748d0adf, type: 3}
+  - {fileID: 868326169388736369, guid: 6d7f2d34336b14dd58aed9de7da4133b, type: 3}
+  - {fileID: 8924746962092756883, guid: 9ce526acfd53948c59d5a34e2c49bbc0, type: 3}
+  - {fileID: 8924746962092756883, guid: b8cb2b2ef6e5b4fcb8e010ffe4f6a763, type: 3}
 --- !u!4 &1830375955
 Transform:
   m_ObjectHideFlags: 0
