@@ -23,11 +23,11 @@ public class ScoreCounter : MonoBehaviour
 
     public void SetInitialScore()
     {
-        IncreaseScore("");
+        IncreaseScore("", 0);
     }
 
     // MARK: - Public Functions
-    public void IncreaseScore(string color)
+    public void IncreaseScore(string color, int count)
     {
         int increaseScoreBy = 0;
         if (color == "y")
@@ -50,6 +50,7 @@ public class ScoreCounter : MonoBehaviour
         {
             increaseScoreBy = 0;
         }
+        increaseScoreBy *= 2;
 
         UpdateScore(increaseScoreBy);
     }
@@ -60,9 +61,10 @@ public class ScoreCounter : MonoBehaviour
         int destinationScore = currentScore + increaseBy;
         if (currentScore != (destinationScore))
         {
-            DOVirtual.Int(currentScore, destinationScore, duration,(v)=>text.text = v.ToString());
+            DOVirtual.Int(currentScore, destinationScore, duration, (v) => text.text = v.ToString());
             currentScore = destinationScore;
-        } else
+        }
+        else
         {
             text.text = currentScore.ToString();
             currentScore = increaseBy;

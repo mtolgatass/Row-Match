@@ -11,9 +11,9 @@ public class MoveCounter : MonoBehaviour
     public float duration;
 
     // MARK: - Private Variables
-    private int currentMoveCount = 0;
+    public int currentMoveCount = 0;
     private string currentMoveCountText = "";
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +51,6 @@ public class MoveCounter : MonoBehaviour
             x => txt = x,
             currentMoveCountText,
             duration
-            ).OnUpdate (() => text.text = txt);
+            ).OnUpdate(() => text.text = txt);
     }
 }

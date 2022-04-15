@@ -134,7 +134,7 @@ public class LevelProvider : MonoBehaviour
 
     private string RequestLevelInfoFromPersistantData(int level)
     {
-        string filePath = Application.persistentDataPath + "/Levels/Level" + level + ".txt";
+        string filePath = Application.persistentDataPath + "/Level" + level + ".txt";
 
         if (File.Exists(filePath))
         {
@@ -145,7 +145,8 @@ public class LevelProvider : MonoBehaviour
             stream.Close();
             Debug.Log("THIS IS WHAT I GOT FROM MEMORY" + data);
             return data;
-        } else
+        }
+        else
         {
             return "";
         }

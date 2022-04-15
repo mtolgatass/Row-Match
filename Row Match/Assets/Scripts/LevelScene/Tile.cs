@@ -20,6 +20,7 @@ public class Tile : MonoBehaviour
     public Transform circleTransform;
     public Renderer sphereRenderer;
     public string color = "r";
+    public int point = 0;
     public bool canSwipe = true;
 
     void Start()
@@ -116,7 +117,7 @@ public class Tile : MonoBehaviour
         bool canDestionationSwap = destinationTile.GetComponent<Tile>().canSwipe;
         if (canSwipe && canDestionationSwap)
         {
-            
+
 
             destinationTileRow = destinationTile.GetComponent<Tile>().row;
             destinationTileRow -= 1;

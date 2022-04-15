@@ -6,19 +6,6 @@ public class TileProvider : MonoBehaviour
 {
     // MARK: - Public Variables
     public GameObject[] tiles;
-    public GameObject tilePrefab;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     // MARK: - Public Functions
     public GameObject DeliverTile(string color, Vector2 position)
@@ -26,32 +13,26 @@ public class TileProvider : MonoBehaviour
         if (color == "y")
         {
             return DeliverYellowTile(position);
-        } else if (color == "r")
+        }
+        else if (color == "r")
         {
             return DeliverRedTile(position);
-        } else if(color == "g")
+        }
+        else if (color == "g")
         {
             return DeliverGreenTile(position);
-        } else if(color == "b")
+        }
+        else if (color == "b")
         {
             return DeliverBlueTile(position);
-        } else if (color == "complete")
-        {
-            return DeliverCompleteTile(position);
         }
         else
         {
-            return DeliverBackgroundTile(position);
+            return DeliverCompleteTile(position);
         }
     }
 
     // MARK: - Private Functions
-    private GameObject DeliverBackgroundTile(Vector2 position)
-    {
-        GameObject backgroundTile = Instantiate(tilePrefab, position, Quaternion.identity);
-        backgroundTile.name = "Background";
-        return backgroundTile;
-    }
 
     private GameObject DeliverYellowTile(Vector2 position)
     {
@@ -89,7 +70,7 @@ public class TileProvider : MonoBehaviour
     {
         GameObject tile = Instantiate(tiles[4], position, Quaternion.identity);
         tile.GetComponent<Tile>().color = "c";
-        //tile.GetComponent<Tile>().canSwipe = false;
+        tile.GetComponent<Tile>().canSwipe = false;
         tile.name = "Complete Tile At Column: " + position.x + " Row; " + position.y;
         return tile;
     }

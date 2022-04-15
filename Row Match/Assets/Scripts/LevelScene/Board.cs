@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class Board : MonoBehaviour
 {
     // MARK: - Private Variables
-    private BackgroundTile[,] gameBoard;
     private bool matchFound = false;
     private List<int> matchedRows = new List<int>();
     private List<string> matchedColors = new List<string>();
@@ -32,8 +31,7 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FetchLevelInfo(1);
-        gameBoard = new BackgroundTile[width, height];
+        FetchLevelInfo(22);
         allTiles = new GameObject[width, height];
         ConfigureTiles();
         scoreCounter.SetInitialScore();
@@ -46,9 +44,20 @@ public class Board : MonoBehaviour
             MoveMatchedRowUp();
             matchFound = false;
         }
+
+        if (moveCounter.currentMoveCount <= 0)
+        {
+            DisableSwiping();
+        }
     }
 
     // MARK: - Private Functions
+    private void DisableSwiping()
+    {
+        for (int i = 0; i < width; i++)
+            for (int j = 0; j < height; j++)
+                allTiles[i, j].GetComponent<Tile>().canSwipe = false;
+    }
     private void FetchLevelInfo(int levelNo)
     {
         List<int> levelInfo = levelProvider.RequestLevelInfo(levelNo);
@@ -61,14 +70,11 @@ public class Board : MonoBehaviour
     private void ConfigureTiles()
     {
         int indexForGrid = 0;
-        for (int i = 0; i < width; i ++)
+        for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < height; j ++)
+            for (int j = 0; j < height; j++)
             {
                 Vector2 tempPosition = new Vector2(i, j);
-                GameObject backgroundTile = tileProvider.DeliverTile("background", tempPosition);
-                backgroundTile.transform.parent = this.transform;
-
                 GameObject tile = tileProvider.DeliverTile(grid[indexForGrid], tempPosition);
                 tile.transform.parent = this.transform;
 
@@ -81,7 +87,7 @@ public class Board : MonoBehaviour
     // MARK: - Public Functions
     public void FindMatches(int[] forRow)
     {
-        for (int i = 0; i < forRow.Length; i++) 
+        for (int i = 0; i < forRow.Length; i++)
         {
             List<string> itemList = new List<string>();
             for (int j = 0; j < width; j++)
@@ -96,7 +102,7 @@ public class Board : MonoBehaviour
                 {
                     matchFound = true;
                     matchedRows.Add(forRow[i]);
-                    scoreCounter.IncreaseScore(itemList[0]);
+                    scoreCounter.IncreaseScore(itemList[0], width);
                     rowToAnimate = forRow[i];
                 }
             }
@@ -112,7 +118,7 @@ public class Board : MonoBehaviour
             tile.GetComponent<Tile>().transform
                 .DOMoveY(10f, animationDuration)
                 .SetEase(moveRowUpAnimationEase)
-                .OnStepComplete(()=> { Destroy(tile); } );
+                .OnStepComplete(() => { Destroy(tile); });
             PlaceCompleteRow(i, rowToAnimate);
         }
     }
