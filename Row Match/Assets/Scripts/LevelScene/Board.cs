@@ -15,6 +15,7 @@ public class Board : MonoBehaviour
     private int rowToAnimate;
 
     // MARK: - Public Variables
+    public Camera camera;
     public ScoreCounter scoreCounter;
     public MoveCounter moveCounter;
     public LevelProvider levelProvider;
@@ -31,7 +32,8 @@ public class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FetchLevelInfo(22);
+        FetchLevelInfo(16);
+        RepositionCamera();
         allTiles = new GameObject[width, height];
         ConfigureTiles();
         scoreCounter.SetInitialScore();
@@ -74,37 +76,12 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j);
+                Vector2 tempPosition = new Vector3(i, j, -10);
                 GameObject tile = tileProvider.DeliverTile(grid[indexForGrid], tempPosition);
                 tile.transform.parent = this.transform;
 
                 allTiles[i, j] = tile;
                 indexForGrid++;
-            }
-        }
-    }
-
-    // MARK: - Public Functions
-    public void FindMatches(int[] forRow)
-    {
-        for (int i = 0; i < forRow.Length; i++)
-        {
-            List<string> itemList = new List<string>();
-            for (int j = 0; j < width; j++)
-            {
-                GameObject itemToSearch = allTiles[j, forRow[i]];
-                itemList.Add(itemToSearch.GetComponent<Tile>().color);
-            }
-            itemList = itemList.Distinct().ToList();
-            if (itemList.Count() == 1)
-            {
-                if (!(matchedRows.Contains(forRow[i])))
-                {
-                    matchFound = true;
-                    matchedRows.Add(forRow[i]);
-                    scoreCounter.IncreaseScore(itemList[0], width);
-                    rowToAnimate = forRow[i];
-                }
             }
         }
     }
@@ -137,5 +114,36 @@ public class Board : MonoBehaviour
         completeTile.GetComponent<Tile>().transform
                 .DOLocalMoveY(destination, completeRowAnimationDuration)
                 .SetEase(completeRowAnimationEase);
+    }
+
+    void RepositionCamera()
+    {
+        Vector3 tempPosition = new Vector3((width - 1) / 2, height - 2, -10);
+        camera.transform.position = tempPosition;
+    }
+
+    // MARK: - Public Functions
+    public void FindMatches(int[] forRow)
+    {
+        for (int i = 0; i < forRow.Length; i++)
+        {
+            List<string> itemList = new List<string>();
+            for (int j = 0; j < width; j++)
+            {
+                GameObject itemToSearch = allTiles[j, forRow[i]];
+                itemList.Add(itemToSearch.GetComponent<Tile>().color);
+            }
+            itemList = itemList.Distinct().ToList();
+            if (itemList.Count() == 1)
+            {
+                if (!(matchedRows.Contains(forRow[i])))
+                {
+                    matchFound = true;
+                    matchedRows.Add(forRow[i]);
+                    scoreCounter.IncreaseScore(itemList[0], width);
+                    rowToAnimate = forRow[i];
+                }
+            }
+        }
     }
 }

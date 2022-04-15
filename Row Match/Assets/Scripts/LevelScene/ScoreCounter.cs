@@ -50,7 +50,7 @@ public class ScoreCounter : MonoBehaviour
         {
             increaseScoreBy = 0;
         }
-        increaseScoreBy *= 2;
+        increaseScoreBy *= count;
 
         UpdateScore(increaseScoreBy);
     }
