@@ -51,10 +51,8 @@ public class Tile : MonoBehaviour
 
     private void CalculateAngle()
     {
-        Debug.Log("LETS HOLD ON");
         if (Mathf.Abs(finalTouchCoordinates.y - firstTouchCoordinates.y) > swipeResist || Mathf.Abs(finalTouchCoordinates.x - firstTouchCoordinates.x) > swipeResist)
         {
-            Debug.Log("LETS GO");
             swipeAngle = Mathf.Atan2(finalTouchCoordinates.y - firstTouchCoordinates.y, finalTouchCoordinates.x - firstTouchCoordinates.x) * 180 / Mathf.PI;
             MoveTile();
         }

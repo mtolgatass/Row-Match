@@ -196,7 +196,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: -3
   m_TargetDisplay: 0
@@ -684,6 +684,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1322604267}
   duration: 0.5
+  outOfMovesText: {fileID: 2280177300276706771, guid: d886a0d8c42ea44f896f76edbd85c0bf,
+    type: 3}
   currentMoveCount: 0
 --- !u!1 &1624680346
 GameObject:

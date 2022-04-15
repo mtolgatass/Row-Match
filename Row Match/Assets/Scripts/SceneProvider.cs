@@ -10,11 +10,11 @@ public class SceneProvider : MonoBehaviour
 
     public void LoadMainScene()
     {
-        LoadScene(0);
+        LoadScene(1);
     }
 
     public void LoadLevelScene()
     {
-        LoadScene(1);
+        LoadScene(2);
     }
 }
