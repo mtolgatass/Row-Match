@@ -24,7 +24,7 @@ public class EntryScene : MonoBehaviour
         CustomButton newButton;
         newButton = ButtonProvider.DeliverCustomButton(this.transform);
         newButton.ChangeText("Levels");
-        newButton.onClick.AddListener(() => { ButtonOnClick(); });
+        //newButton.onClick.AddListener(() => { ButtonOnClick(); });
     }
 
     private void ButtonOnClick()
