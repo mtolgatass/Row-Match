@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class EntryScene : MonoBehaviour
 {
@@ -24,12 +25,17 @@ public class EntryScene : MonoBehaviour
         CustomButton newButton;
         newButton = ButtonProvider.DeliverCustomButton(this.transform);
         newButton.ChangeText("Levels");
-        //newButton.onClick.AddListener(() => { ButtonOnClick(); });
+        newButton.ButtonComponentSelectEvent = (int index) =>
+        {
+            ButtonOnClick(index);
+        };
     }
 
-    private void ButtonOnClick()
+    public static void ButtonOnClick(int index)
     {
-        Debug.Log("IM HEREEE");
+        Debug.Log("IM HEREEE: " + index);
         SceneProvider.GetInstance().LoadMainScene();
     }
+
+
 }
