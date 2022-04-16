@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EntryScene : MonoBehaviour
 {
@@ -25,12 +26,18 @@ public class EntryScene : MonoBehaviour
     private void RequestButton()
     {
         GameObject newButton;
-        newButton = buttonProvider.DeliverButton(canvas.transform);
-        newButton.GetComponent<Button>().onClick.AddListener(() => { ButtonOnClick(); });
+        newButton = buttonProvider.DeliverBetterButton(canvas.transform);
+
+        Button buttonComponent = newButton.GetComponentInChildren<Button>();
+        buttonComponent.onClick.AddListener(() => { ButtonOnClick(); });
+
+        TextMeshPro tmpTextComponent = newButton.GetComponentInChildren<TextMeshPro>();
+        tmpTextComponent.text = "START";
     }
 
     private void ButtonOnClick()
     {
+        Debug.Log("IM HEREEE");
         sceneProvider.LoadMainScene();
     }
 }
