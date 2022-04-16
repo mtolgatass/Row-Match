@@ -10,9 +10,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class LevelProvider : MonoBehaviour
 {
     // MARK: - Public Variables
-    public TextAsset[] levels;
+    public static TextAsset[] levels;
     public string[] levelTypes = { "A", "B" };
-    public int[] levelCounts = { 15, 10 };
+    public static int[] levelCounts = { 15, 10 };
 
     // MARK: - Private Variables
     private List<string> grid = new List<string>();
@@ -20,6 +20,7 @@ public class LevelProvider : MonoBehaviour
     private int width;
     private int height;
     private int downloadedLevelCount = 1;
+    private Dictionary<int, int> levelScores = new Dictionary<int, int>();
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +53,11 @@ public class LevelProvider : MonoBehaviour
     }
 
     // MARK: - Public Functions
+    public void SaveLevelScore(int score, int levelNo)
+    {
+
+    }
+
     public List<int> RequestLevelInfo(int levelNo)
     {
         List<int> returnList = new List<int>();
@@ -143,7 +149,6 @@ public class LevelProvider : MonoBehaviour
 
             String data = formatter.Deserialize(stream) as String;
             stream.Close();
-            Debug.Log("THIS IS WHAT I GOT FROM MEMORY" + data);
             return data;
         }
         else

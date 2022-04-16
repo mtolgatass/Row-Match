@@ -6,10 +6,6 @@ using TMPro;
 
 public class EntryScene : MonoBehaviour
 {
-    public ButtonProvider buttonProvider;
-    public SceneProvider sceneProvider;
-    public Canvas canvas;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -25,19 +21,15 @@ public class EntryScene : MonoBehaviour
 
     private void RequestButton()
     {
-        GameObject newButton;
-        newButton = buttonProvider.DeliverBetterButton(canvas.transform);
-
-        Button buttonComponent = newButton.GetComponentInChildren<Button>();
-        buttonComponent.onClick.AddListener(() => { ButtonOnClick(); });
-
-        TextMeshPro tmpTextComponent = newButton.GetComponentInChildren<TextMeshPro>();
-        tmpTextComponent.text = "START";
+        CustomButton newButton;
+        newButton = ButtonProvider.DeliverCustomButton(this.transform);
+        newButton.ChangeText("Levels");
+        newButton.onClick.AddListener(() => { ButtonOnClick(); });
     }
 
     private void ButtonOnClick()
     {
         Debug.Log("IM HEREEE");
-        sceneProvider.LoadMainScene();
+        SceneProvider.GetInstance().LoadMainScene();
     }
 }
