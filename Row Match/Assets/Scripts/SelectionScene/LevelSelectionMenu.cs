@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
+﻿using TMPro;
 using System;
+using UnityEngine;
+using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
 
 public sealed class LevelSelectionMenu : MonoBehaviour
 {
@@ -16,21 +17,11 @@ public sealed class LevelSelectionMenu : MonoBehaviour
         PlaceBanner();
         levelCount = 25;
         CreateButtons();
-        ShowCelebrationPopup();
     }
 
     void Update()
     {
         CheckForInput();
-    }
-
-    private void ShowCelebrationPopup()
-    {
-        bool shouldShowCelebration = Convert.ToBoolean(PlayerPrefs.GetInt("shouldShowCelebration"));
-        if (shouldShowCelebration)
-        {
-            //TODO
-        }
     }
 
     private void PlaceBanner()
@@ -64,8 +55,17 @@ public sealed class LevelSelectionMenu : MonoBehaviour
 
     private void ButtonOnClick(int index)
     {
-        PlayerPrefs.SetInt("selectedLevel", index);
-        SceneProvider.GetInstance().LoadLevelScene();
+        LevelScoreInfo levelInfo = DataSaver.LoadLevelInfo(index);
+
+        if (levelInfo.isEnabled)
+        {
+            PlayerPrefs.SetInt("selectedLevel", index);
+            SceneProvider.GetInstance().LoadLevelScene();
+        }
+        else
+        {
+            ShowLockedError();
+        }
     }
 
 
@@ -92,5 +92,23 @@ public sealed class LevelSelectionMenu : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void ShowLockedError()
+    {
+        Vector2 centerBottom = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, 0));
+        WarningBanner banner = Instantiate(Resources.Load<WarningBanner>("WarningBanner"), centerBottom, Quaternion.identity);
+        banner.ChangeText("Play Previous Level First");
+        banner.transform.SetParent(this.transform);
+
+        banner.GetComponentInChildren<SpriteRenderer>().sortingOrder = 2;
+        banner.GetComponentInChildren<TextMeshPro>().sortingOrder = 2;
+
+        Vector2 center = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, Screen.height / 2));
+        banner.transform
+            .DOLocalMoveY(Screen.height / 8, 3f)
+            .SetEase(Ease.OutBounce)
+            .OnStepComplete(() => { banner.DestroyBanner(); });
+
     }
 }

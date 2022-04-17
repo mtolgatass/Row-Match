@@ -19,6 +19,11 @@ public sealed class SceneProvider
         SceneManager.LoadScene(index);
     }
 
+    public void LoadInitialScene()
+    {
+        LoadScene(0);
+    }
+
     public void LoadMainScene()
     {
         LoadScene(1);

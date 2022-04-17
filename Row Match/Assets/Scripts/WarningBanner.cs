@@ -11,4 +11,9 @@ public class WarningBanner : MonoBehaviour
         TextMeshPro[] tmPro = this.GetComponentsInChildren<TextMeshPro>();
         tmPro[0].text = text;
     }
+
+public void DestroyBanner()
+{
+Destroy(this.gameObject);
+}
 }

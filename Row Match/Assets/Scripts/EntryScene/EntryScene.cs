@@ -19,6 +19,7 @@ public sealed class EntryScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ShowCelebrationPopup();
         RequestButton();
         StartDownloadingLevels();
     }
@@ -101,6 +102,15 @@ public sealed class EntryScene : MonoBehaviour
             {
                 ButtonOnClick();
             }
+        }
+    }
+
+    private void ShowCelebrationPopup()
+    {
+        bool shouldShowCelebration = Convert.ToBoolean(PlayerPrefs.GetInt("shouldShowCelebration"));
+        if (shouldShowCelebration)
+        {
+            //TODO
         }
     }
 }

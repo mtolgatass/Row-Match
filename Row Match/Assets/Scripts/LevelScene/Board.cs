@@ -85,7 +85,7 @@ public sealed class Board : MonoBehaviour
         DataSaver.SaveLevelInfo(nextLevelInfo.levelNo, nextLevelInfo.highScore, true);
 
 
-        SceneProvider.GetInstance().LoadMainScene();
+        SceneProvider.GetInstance().LoadInitialScene();
     }
 
     private void FetchLevelInfo(int levelNo)
