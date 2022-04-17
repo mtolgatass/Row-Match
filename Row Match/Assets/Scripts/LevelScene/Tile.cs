@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public sealed class Tile : MonoBehaviour
 {
     // MARK: - Private Variables
     private GameObject destinationTile;

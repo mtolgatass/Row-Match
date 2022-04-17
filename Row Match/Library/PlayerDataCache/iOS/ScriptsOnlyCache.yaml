@@ -1,9 +1,12 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - BackgroundTile
     - Board
+    - ButtonProvider
+    - CustomButton
+    - EntryScene
     - LevelProvider
+    - LevelSelectionMenu
     - MoveCounter
     - ScoreCounter
     - Tile
@@ -12,19 +15,93 @@ ScriptsOnlyBuild:
     - DG.Tweening.Core.DOTweenSettings
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
+    Unity.TextMeshPro.dll:
+    - TMPro.TMP_FontAsset
+    - TMPro.TMP_Settings
+    - TMPro.TMP_SpriteAsset
+    - TMPro.TMP_StyleSheet
+    - TMPro.TextMeshPro
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     - UnityEditor.TestTools.TestRunner.TestRun.TestJobDataHolder
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.PhysicsRaycaster
     - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
-    - UnityEngine.UI.Image
     - UnityEngine.UI.Text
   sceneClasses:
-    Assets/Scenes/Main.unity:
+    Assets/Scenes/EntryScene.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 61
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11380}
+    - Class: 114
+      Script: {instanceID: 11480}
+    - Class: 114
+      Script: {instanceID: 11618}
+    - Class: 114
+      Script: {instanceID: 11888}
+    - Class: 114
+      Script: {instanceID: 11914}
+    - Class: 114
+      Script: {instanceID: 12274}
+    - Class: 114
+      Script: {instanceID: 12500}
+    - Class: 114
+      Script: {instanceID: 12514}
+    - Class: 114
+      Script: {instanceID: 12926}
+    - Class: 114
+      Script: {instanceID: 13022}
+    - Class: 114
+      Script: {instanceID: 13132}
+    - Class: 114
+      Script: {instanceID: 23050}
+    - Class: 114
+      Script: {instanceID: 24718}
+    - Class: 114
+      Script: {instanceID: 36738}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/LevelScene.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -37,8 +114,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 49
-      Script: {instanceID: 0}
     - Class: 50
       Script: {instanceID: 0}
     - Class: 58
@@ -48,33 +123,27 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11250}
+      Script: {instanceID: 11284}
     - Class: 114
-      Script: {instanceID: 11346}
+      Script: {instanceID: 11380}
     - Class: 114
-      Script: {instanceID: 11408}
+      Script: {instanceID: 11452}
     - Class: 114
-      Script: {instanceID: 11418}
+      Script: {instanceID: 11888}
     - Class: 114
-      Script: {instanceID: 11446}
+      Script: {instanceID: 12362}
     - Class: 114
-      Script: {instanceID: 11466}
+      Script: {instanceID: 12482}
     - Class: 114
-      Script: {instanceID: 11854}
+      Script: {instanceID: 12588}
     - Class: 114
-      Script: {instanceID: 12442}
+      Script: {instanceID: 12760}
     - Class: 114
-      Script: {instanceID: 12718}
+      Script: {instanceID: 12860}
     - Class: 114
-      Script: {instanceID: 12816}
+      Script: {instanceID: 13116}
     - Class: 114
-      Script: {instanceID: 13070}
-    - Class: 114
-      Script: {instanceID: 13088}
-    - Class: 114
-      Script: {instanceID: 16476}
-    - Class: 114
-      Script: {instanceID: 23710}
+      Script: {instanceID: 13132}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -92,6 +161,37 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/SelectionScene.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 11380}
+    - Class: 114
+      Script: {instanceID: 11888}
+    - Class: 114
+      Script: {instanceID: 12766}
+    - Class: 114
+      Script: {instanceID: 13132}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -120,7 +220,7 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
-      Hash: e6c7a1aec3631afcee353eb56cfca685
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LevelProvider
@@ -354,6 +454,12 @@ ScriptsOnlyBuild:
     className: RawImage
   - hash:
       serializedVersion: 2
+      Hash: e07823beaf1f9ec2f693258d77b9d777
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MoveCounter
+  - hash:
+      serializedVersion: 2
       Hash: 5ad4aa237d47ac2bab17bacb672edf7a
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -372,7 +478,7 @@ ScriptsOnlyBuild:
     className: SignalReceiver
   - hash:
       serializedVersion: 2
-      Hash: 51b9884b45182ebad0921630054cedfa
+      Hash: 1aed003e00d3f9368bb89b203ac6c386
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Tile
@@ -414,6 +520,12 @@ ScriptsOnlyBuild:
     className: TimelineAsset
   - hash:
       serializedVersion: 2
+      Hash: f3771b5e30c41949ff793dee88003258
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: ScoreCounter
+  - hash:
+      serializedVersion: 2
       Hash: 6939772cb3ce775a8e8d99f332534491
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -432,13 +544,19 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 58a2c1f39524d13e14d9ce9da9bae1d7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LevelSelectionMenu
+  - hash:
+      serializedVersion: 2
       Hash: 8e6ceabfd38a184413d69b7db56c89cc
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
     className: BeforeAfterTestCommandState
   - hash:
       serializedVersion: 2
-      Hash: 06662c18a3e3e69987cf3fd9b3bdcdfa
+      Hash: fa1c8e97ff88d05cc987f13238a5ff35
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: TileProvider
@@ -504,7 +622,7 @@ ScriptsOnlyBuild:
     className: TestRunCallbackListener
   - hash:
       serializedVersion: 2
-      Hash: b508d9c46809157595abbbeeb9ade935
+      Hash: 3548c8e1a4c15110763171b530711b2f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Board
@@ -558,17 +676,31 @@ ScriptsOnlyBuild:
     className: PlayableTrack
   - hash:
       serializedVersion: 2
-      Hash: f3771b5e30c41949ff793dee88003258
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: ScoreCounter
+    className: OutOfMovesCanvas
   - hash:
       serializedVersion: 2
-      Hash: 75eb19d0071517548238dac91e008321
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: MoveCounter
+    className: ButtonProvider
+  - hash:
+      serializedVersion: 2
+      Hash: 03724041c6f186f25f139dd10a4e7d91
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EntryScene
+  - hash:
+      serializedVersion: 2
+      Hash: f450bd92c660880e07a6cb4e4f93cd6d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CustomButton
   platform: 9
   scenePathNames:
-  - Assets/Scenes/Main.unity
+  - Assets/Scenes/EntryScene.unity
+  - Assets/Scenes/SelectionScene.unity
+  - Assets/Scenes/LevelScene.unity
   playerPath: /Users/tolgatas/Desktop/Row Match Builds/Row-Match

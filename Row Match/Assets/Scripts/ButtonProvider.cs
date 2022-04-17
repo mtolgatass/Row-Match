@@ -10,4 +10,10 @@ public sealed class ButtonProvider : MonoBehaviour
         Debug.Log("GOT BUTTON: " + button.index);
         return button;
     }
+
+    public static CustomButton DeliverCustomButtonForMenu(Vector2 position)
+    {
+        CustomButton button = Instantiate(Resources.Load<CustomButton>("CustomButton"), position, Quaternion.identity);
+        return button;
+    }
 }

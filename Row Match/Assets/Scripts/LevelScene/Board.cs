@@ -5,7 +5,7 @@ using System.Linq;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class Board : MonoBehaviour
+public sealed class Board : MonoBehaviour
 {
     // MARK: - Private Variables
     private bool matchFound = false;
@@ -76,7 +76,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector3(i, j, -10);
+                Vector2 tempPosition = new Vector2(i, j);
                 GameObject tile = tileProvider.DeliverTile(grid[indexForGrid], tempPosition);
                 tile.transform.parent = this.transform;
 

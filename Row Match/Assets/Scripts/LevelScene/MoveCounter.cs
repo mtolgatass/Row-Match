@@ -6,7 +6,7 @@ using DG.Tweening;
 using TMPro;
 using Debug = UnityEngine.Debug;
 
-public class MoveCounter : MonoBehaviour
+public sealed class MoveCounter : MonoBehaviour
 {
     // MARK: - Public Variables
     public Text text;

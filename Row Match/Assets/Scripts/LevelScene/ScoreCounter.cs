@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class ScoreCounter : MonoBehaviour
+public sealed class ScoreCounter : MonoBehaviour
 {
     // MARK: - Public Variables
     public int currentScore = 0;

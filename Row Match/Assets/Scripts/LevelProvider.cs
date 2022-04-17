@@ -10,53 +10,14 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class LevelProvider : MonoBehaviour
 {
     // MARK: - Public Variables
-    public static TextAsset[] levels;
-    public string[] levelTypes = { "A", "B" };
-    public static int[] levelCounts = { 15, 10 };
+    public TextAsset[] levels;
 
     // MARK: - Private Variables
     private List<string> grid = new List<string>();
     private int moveCount;
     private int width;
     private int height;
-    private int downloadedLevelCount = 1;
     private Dictionary<int, int> levelScores = new Dictionary<int, int>();
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartDownloadingLevels();
-    }
-
-    IEnumerator DownloadLevel(string type, int levelIndex)
-    {
-        string filePath = Application.persistentDataPath + "/Level" + downloadedLevelCount + ".txt";
-        downloadedLevelCount++;
-
-        string downloadURL = "https://row-match.s3.amazonaws.com/levels/RM_" + type + levelIndex.ToString();
-
-        if (!File.Exists(filePath))
-        {
-            UnityWebRequest www = new UnityWebRequest(downloadURL);
-            www.downloadHandler = new DownloadHandlerBuffer();
-            yield return www.SendWebRequest();
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                string results = www.downloadHandler.text;
-                SaveLevel(results, filePath);
-            }
-        }
-    }
-
-    // MARK: - Public Functions
-    public void SaveLevelScore(int score, int levelNo)
-    {
-
-    }
 
     public List<int> RequestLevelInfo(int levelNo)
     {
@@ -116,26 +77,6 @@ public class LevelProvider : MonoBehaviour
         {
             grid.Add(colors[i]);
         }
-    }
-
-    private void StartDownloadingLevels()
-    {
-        for (int i = 0; i < levelTypes.Length; i++)
-        {
-            for (int j = 1; j < levelCounts[i] + 1; j++)
-            {
-                StartCoroutine(DownloadLevel(levelTypes[i], j));
-            }
-        }
-    }
-
-    private void SaveLevel(string levelInfo, string path)
-    {
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream stream = new FileStream(path, FileMode.Create);
-
-        formatter.Serialize(stream, levelInfo);
-        stream.Close();
     }
 
     private string RequestLevelInfoFromPersistantData(int level)
