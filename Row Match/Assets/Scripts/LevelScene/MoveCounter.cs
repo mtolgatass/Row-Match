@@ -11,7 +11,6 @@ public sealed class MoveCounter : MonoBehaviour
     // MARK: - Public Variables
     public Text text;
     public float duration;
-    public GameObject outOfMovesText;
 
     // MARK: - Private Variables
     public int currentMoveCount = 0;
@@ -64,14 +63,6 @@ public sealed class MoveCounter : MonoBehaviour
 
     private void ShowOutOfMovesText()
     {
-        Vector2 position = new Vector2(0, 0);
-        GameObject text = Instantiate(outOfMovesText, position, Quaternion.identity);
-        Vector3 scale = this.transform.localScale;
-        text.transform.SetParent(this.transform.parent);
-        text.transform.localScale = Vector2.zero;
-        text.transform.DOScale(scale, 0.8f);
-        //text.GetComponent<OutOfMovesCanvas>().transform.height = 80;
-        //text.GetComponent<OutOfMovesCanvas>().transform.width = 300;
-        //text.GetComponent<OutOfMovesCanvas>().transform.DOMoveY(5f, 5);
+
     }
 }

@@ -13,7 +13,8 @@ public sealed class EntryScene : MonoBehaviour
 {
     public string[] levelTypes = { "A", "B" };
     public static int[] levelCounts = { 15, 10 };
-    private int downloadedLevelCount = 1;
+    private int downloadedLevelCount = 0;
+    private int savedLevelInfoCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +32,7 @@ public sealed class EntryScene : MonoBehaviour
     {
         CustomButton newButton;
         Vector2 center = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, Screen.height / 2));
-        newButton = ButtonProvider.DeliverCustomButtonForMenu(center);
+        newButton = ButtonProvider.DeliverCustomButton(center);
         newButton.transform.SetParent(this.transform);
         newButton.ChangeText("Levels");
     }
@@ -55,6 +56,7 @@ public sealed class EntryScene : MonoBehaviour
     IEnumerator DownloadLevel(string type, int levelIndex)
     {
         string filePath = Application.persistentDataPath + "/Level" + downloadedLevelCount + ".txt";
+
         downloadedLevelCount++;
 
         string downloadURL = "https://row-match.s3.amazonaws.com/levels/RM_" + type + levelIndex.ToString();
@@ -72,6 +74,11 @@ public sealed class EntryScene : MonoBehaviour
             {
                 string results = www.downloadHandler.text;
                 SaveLevel(results, filePath);
+
+                LevelScoreInfo levelInfo = new LevelScoreInfo();
+                levelInfo.levelNo = savedLevelInfoCount;
+                DataSaver.SaveLevelInfo(savedLevelInfoCount, 0, false);
+                savedLevelInfoCount++;
             }
         }
     }

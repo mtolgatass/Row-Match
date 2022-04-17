@@ -5,7 +5,7 @@ using TMPro;
 
 public sealed class LevelSelectionMenu : MonoBehaviour
 {
-    private List<CustomButton> levelButtons = new List<CustomButton>();
+    private List<MenuCustomButton> levelButtons = new List<MenuCustomButton>();
     public int levelCount;
     public LevelProvider levelProvider;
 
@@ -13,7 +13,7 @@ public sealed class LevelSelectionMenu : MonoBehaviour
     void Start()
     {
         PlaceBanner();
-        levelCount = 10;
+        levelCount = 25;
         CreateButtons();
     }
 
@@ -33,16 +33,18 @@ public sealed class LevelSelectionMenu : MonoBehaviour
 
     private void CreateButtons()
     {
-        Vector2 previousButtonLocation = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, Screen.height - 120));
+        Vector2 previousButtonLocation = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, Screen.height - 160));
 
         for (int i = 0; i < levelCount; i++)
         {
-            CustomButton newButton;
+            MenuCustomButton newButton;
             Vector2 tempPosition = previousButtonLocation;
             newButton = ButtonProvider.DeliverCustomButtonForMenu(tempPosition);
-            previousButtonLocation = previousButtonLocation - new Vector2(0, 2);
+            previousButtonLocation = previousButtonLocation - new Vector2(0, (float)3.5);
+            LevelScoreInfo loadedData = DataSaver.LoadLevelInfo(i);
+
             newButton.transform.SetParent(this.transform);
-            newButton.ChangeText("Level: " + (i + 1));
+            newButton.ChangeText("Level: " + (i + 1) + "\nHighscore: " + loadedData.highScore);
             newButton.index = i;
 
             levelButtons.Add(newButton);
@@ -52,7 +54,15 @@ public sealed class LevelSelectionMenu : MonoBehaviour
     private void ButtonOnClick(int index)
     {
         Debug.Log("IM HEREEE: " + index);
-        //SceneProvider.GetInstance().LoadMainScene();
+
+        if (index == 0)
+        {
+            DataSaver.SaveLevelInfo(index, 0, true);
+        }
+
+        PlayerPrefs.SetInt("selectedLevel", index);
+
+        SceneProvider.GetInstance().LoadLevelScene();
     }
 
 
@@ -72,7 +82,7 @@ public sealed class LevelSelectionMenu : MonoBehaviour
 
                 if (colliderHit != null)
                 {
-                    foreach (CustomButton button in levelButtons)
+                    foreach (MenuCustomButton button in levelButtons)
                     {
                         if (colliderHit.name == button.GetComponent<BoxCollider2D>().name)
                         {

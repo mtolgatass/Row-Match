@@ -148,7 +148,7 @@ public sealed class Tile : MonoBehaviour
         if (Mathf.Abs(column - transform.position.x) > .1)
         {
             tempPosition = new Vector2(column, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .2f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .0.5f);
 
             int[] parameter = { row };
             board.FindMatches(parameter);

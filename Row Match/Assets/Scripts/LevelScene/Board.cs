@@ -32,7 +32,9 @@ public sealed class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FetchLevelInfo(16);
+        int currentLevel = PlayerPrefs.GetInt("selectedLevel");
+
+        FetchLevelInfo(currentLevel);
         RepositionCamera();
         allTiles = new GameObject[width, height];
         ConfigureTiles();

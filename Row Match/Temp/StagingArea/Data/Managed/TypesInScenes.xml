@@ -46,8 +46,10 @@
 		<type fullname="ButtonProvider" preserve="nothing"/>
 		<type fullname="CustomButton" preserve="nothing"/>
 		<type fullname="EntryScene" preserve="nothing"/>
+		<type fullname="LevelBanner" preserve="nothing"/>
 		<type fullname="LevelProvider" preserve="nothing"/>
 		<type fullname="LevelSelectionMenu" preserve="nothing"/>
+		<type fullname="MenuCustomButton" preserve="nothing"/>
 		<type fullname="MoveCounter" preserve="nothing"/>
 		<type fullname="ScoreCounter" preserve="nothing"/>
 		<type fullname="Tile" preserve="nothing"/>
@@ -67,9 +69,9 @@
 		<type fullname="UnityEngine.EventSystems.EventSystem" preserve="nothing"/>
 		<type fullname="UnityEngine.EventSystems.PhysicsRaycaster" preserve="nothing"/>
 		<type fullname="UnityEngine.EventSystems.StandaloneInputModule" preserve="nothing"/>
-		<type fullname="UnityEngine.UI.Button" preserve="nothing"/>
 		<type fullname="UnityEngine.UI.CanvasScaler" preserve="nothing"/>
 		<type fullname="UnityEngine.UI.GraphicRaycaster" preserve="nothing"/>
+		<type fullname="UnityEngine.UI.Image" preserve="nothing"/>
 		<type fullname="UnityEngine.UI.Text" preserve="nothing"/>
 	</assembly>
 </linker>

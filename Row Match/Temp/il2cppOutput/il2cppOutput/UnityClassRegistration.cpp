@@ -24,6 +24,9 @@ extern "C" void RegisterStaticallyLinkedModulesGranular()
 	void RegisterModule_IMGUI();
 	RegisterModule_IMGUI();
 
+	void RegisterModule_JSONSerialize();
+	RegisterModule_JSONSerialize();
+
 	void RegisterModule_Physics();
 	RegisterModule_Physics();
 
