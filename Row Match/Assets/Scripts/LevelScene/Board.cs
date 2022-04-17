@@ -141,15 +141,18 @@ public sealed class Board : MonoBehaviour
         allTiles[row, column] = completeTile;
 
         float destination = column + 1f;
+        Vector2 strength = new Vector2(1, 0);
 
         completeTile.GetComponent<Tile>().transform
-                .DOLocalMoveY(destination, completeRowAnimationDuration)
-                .SetEase(completeRowAnimationEase);
+            .DOLocalMoveY(destination, completeRowAnimationDuration)
+            .SetEase(completeRowAnimationEase);
     }
 
     void RepositionCamera()
     {
-        Vector3 tempPosition = new Vector3((width - 1) / 2, height - 2, -10);
+        float x = (float)((double)width - 1) / 2;
+        Vector3 tempPosition = new Vector3(x, height - 2, -10);
+        Debug.Log(tempPosition);
         camera.transform.position = tempPosition;
     }
 

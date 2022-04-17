@@ -12,8 +12,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public sealed class EntryScene : MonoBehaviour
 {
+    // MARK: - Public Variables
     public string[] levelTypes = { "A", "B" };
     public static int[] levelCounts = { 15, 10 };
+
+    // MARK: - Private Variables
     private int downloadedLevelCount = 0;
 
     // Start is called before the first frame update
@@ -29,6 +32,7 @@ public sealed class EntryScene : MonoBehaviour
         CheckForInput();
     }
 
+    // MARK: - Private Functions
     private void RequestButton()
     {
         CustomButton newButton;
@@ -47,7 +51,7 @@ public sealed class EntryScene : MonoBehaviour
     {
         for (int i = 0; i < levelTypes.Length; i++)
         {
-            for (int j = 1; j < levelCounts[i] + 1; j++)
+            for (int j = 0; j < levelCounts[i] + 1; j++)
             {
                 StartCoroutine(DownloadLevel(levelTypes[i], j));
             }
@@ -57,13 +61,15 @@ public sealed class EntryScene : MonoBehaviour
     IEnumerator DownloadLevel(string type, int levelIndex)
     {
         string filePath = Application.persistentDataPath + "/Level" + downloadedLevelCount + ".txt";
-
         downloadedLevelCount++;
         PlayerPrefs.SetInt("downloadedLevelCount", downloadedLevelCount);
         string downloadURL = "https://row-match.s3.amazonaws.com/levels/RM_" + type + levelIndex.ToString();
 
         if (!File.Exists(filePath))
         {
+            bool isFirstLevel = levelIndex == 0;
+            DataSaver.SaveLevelInfo(levelIndex, 0, isFirstLevel);
+
             UnityWebRequest www = new UnityWebRequest(downloadURL);
             www.downloadHandler = new DownloadHandlerBuffer();
             yield return www.SendWebRequest();
@@ -75,19 +81,8 @@ public sealed class EntryScene : MonoBehaviour
             {
                 string results = www.downloadHandler.text;
                 SaveLevel(results, filePath);
-                bool isFirstLevel = downloadedLevelCount == 0;
-
-                DataSaver.SaveLevelInfo(downloadedLevelCount, 0, isFirstLevel);
             }
         }
-    }
-
-    private int GetMoveCount(string fromLine)
-    {
-        string[] line = Regex.Split(fromLine, "move_count: ");
-        int moveCount = Int32.Parse(line[1]);
-        Debug.Log("Move Count is: " + moveCount);
-        return moveCount;
     }
 
     private void SaveLevel(string levelInfo, string path)

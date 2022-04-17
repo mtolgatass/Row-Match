@@ -351,8 +351,8 @@ MonoBehaviour:
   moveCounter: {fileID: 1322604269}
   levelProvider: {fileID: 637511767}
   tileProvider: {fileID: 1830375954}
-  animationDuration: 3
-  completeRowAnimationDuration: 1
+  animationDuration: 2
+  completeRowAnimationDuration: 2
   moveRowUpAnimationEase: 2
   completeRowAnimationEase: 11
   width: 0

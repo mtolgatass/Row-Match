@@ -25,8 +25,15 @@ public class LevelProvider : MonoBehaviour
         List<string> eachLine = new List<string>();
 
         string levelInfo = RequestLevelInfoFromPersistantData(levelNo);
-        if (levelInfo == "")
+        if (levelInfo.Length == 0)
         {
+            Debug.Log("Level No: " + levelNo);
+
+            if (levelNo >= levels.Length)
+            {
+                return returnList;
+            }
+
             levelInfo = levels[levelNo].text;
         }
         eachLine.AddRange(

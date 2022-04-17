@@ -2,14 +2,21 @@
 using System;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public sealed class LevelSelectionMenu : MonoBehaviour
 {
-    private List<MenuCustomButton> levelButtons = new List<MenuCustomButton>();
+    // MARK: - Public Variables
     public int levelCount;
     public LevelProvider levelProvider;
+
+    // MARK: - Private Variables
+    private List<MenuCustomButton> levelButtons = new List<MenuCustomButton>();
+    private Vector2 firstTouchCoordinates;
+    private Vector2 finalTouchCoordinates;
+    private float swipeAngle = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +29,36 @@ public sealed class LevelSelectionMenu : MonoBehaviour
     void Update()
     {
         CheckForInput();
+    }
+
+    // MARK: - Private Functions
+    private void CalculateAngle()
+    {
+        swipeAngle = Mathf.Atan2(finalTouchCoordinates.y - firstTouchCoordinates.y, finalTouchCoordinates.x - firstTouchCoordinates.x) * 180 / Mathf.PI;
+    }
+
+    private void MoveCameraToDirection()
+    {
+        if (swipeAngle > 0 && swipeAngle <= 180)
+        {
+            SwipeUpAction();
+        }
+        else if (swipeAngle < 0 && swipeAngle >= -180)
+        {
+            SwipeDownAction();
+        }
+    }
+
+    private void SwipeUpAction()
+    {
+        Vector3 position = new Vector3(0, (firstTouchCoordinates.y - finalTouchCoordinates.y), 0);
+        Camera.main.transform.Translate(position);
+    }
+
+    private void SwipeDownAction()
+    {
+        Vector3 position = new Vector3(0, -(finalTouchCoordinates.y - firstTouchCoordinates.y), 0);
+        Camera.main.transform.Translate(position);
     }
 
     private void SetLevelCount()
@@ -52,13 +89,18 @@ public sealed class LevelSelectionMenu : MonoBehaviour
 
         for (int i = 0; i < levelCount; i++)
         {
+            List<int> levelInfo = levelProvider.RequestLevelInfo(i);
+            if (levelInfo.Count <= 1)
+            {
+                return;
+            }
+
             MenuCustomButton newButton;
             Vector2 tempPosition = previousButtonLocation;
             newButton = ButtonProvider.DeliverCustomButtonForMenu(tempPosition);
             previousButtonLocation = previousButtonLocation - new Vector2(0, (float)2.75);
             LevelScoreInfo loadedData = DataSaver.LoadLevelInfo(i);
 
-            List<int> levelInfo = levelProvider.RequestLevelInfo(i);
             int moveCount = levelInfo[2];
 
             newButton.transform.SetParent(this.transform);
@@ -94,6 +136,7 @@ public sealed class LevelSelectionMenu : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            firstTouchCoordinates = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
@@ -113,6 +156,12 @@ public sealed class LevelSelectionMenu : MonoBehaviour
                 }
             }
         }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            finalTouchCoordinates = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            CalculateAngle();
+            MoveCameraToDirection();
+        }
     }
 
     private void ShowLockedError()
@@ -124,10 +173,10 @@ public sealed class LevelSelectionMenu : MonoBehaviour
 
         banner.GetComponentInChildren<SpriteRenderer>().sortingOrder = 2;
         banner.GetComponentInChildren<TextMeshPro>().sortingOrder = 2;
+        Debug.Log("Camera Y is: " + Camera.main.transform.position.y);
 
-        Vector2 center = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, Screen.height / 2));
         banner.transform
-            .DOLocalMoveY(Screen.height / 8, 3f)
+            .DOLocalMoveY(3 - Camera.main.transform.position.y, 3f)
             .SetEase(Ease.OutBounce)
             .OnStepComplete(() => { banner.DestroyBanner(); });
 
