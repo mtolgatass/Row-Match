@@ -14,14 +14,27 @@ public sealed class LevelSelectionMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SetLevelCount();
         PlaceBanner();
-        levelCount = 25;
         CreateButtons();
     }
 
     void Update()
     {
         CheckForInput();
+    }
+
+    private void SetLevelCount()
+    {
+        int levelCount = PlayerPrefs.GetInt("downloadedLevelCount");
+        if (levelCount == 0)
+        {
+            this.levelCount = 10;
+        }
+        else
+        {
+            this.levelCount = levelCount;
+        }
     }
 
     private void PlaceBanner()
@@ -42,12 +55,20 @@ public sealed class LevelSelectionMenu : MonoBehaviour
             MenuCustomButton newButton;
             Vector2 tempPosition = previousButtonLocation;
             newButton = ButtonProvider.DeliverCustomButtonForMenu(tempPosition);
-            previousButtonLocation = previousButtonLocation - new Vector2(0, (float)3.5);
+            previousButtonLocation = previousButtonLocation - new Vector2(0, (float)2.75);
             LevelScoreInfo loadedData = DataSaver.LoadLevelInfo(i);
 
+            List<int> levelInfo = levelProvider.RequestLevelInfo(i);
+            int moveCount = levelInfo[2];
+
             newButton.transform.SetParent(this.transform);
-            newButton.ChangeText("Level: " + (i + 1) + "\nHighscore: " + loadedData.highScore);
+            newButton.ChangeText("Level: " + (i + 1) + " - " + moveCount + " Moves" + "\nHighscore: " + loadedData.highScore);
             newButton.index = i;
+
+            if (!loadedData.isEnabled && loadedData.levelNo != 0)
+            {
+                newButton.ChangeColorToDisabled();
+            }
 
             levelButtons.Add(newButton);
         }

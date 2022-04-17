@@ -42,7 +42,7 @@ public sealed class MoveCounter : MonoBehaviour
         currentMoveCount -= 1;
         currentMoveCountText = currentMoveCount.ToString();
         AddDecreaseAnimation();
-        if (currentMoveCount != 0)
+        if (currentMoveCount == 0)
         {
             Debug.Log("GAME OVER");
             ShowOutOfMovesText();

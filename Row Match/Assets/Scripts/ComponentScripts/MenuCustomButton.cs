@@ -17,4 +17,10 @@ public class MenuCustomButton : MonoBehaviour
         bc.name = text;
         name = text;
     }
+
+public void ChangeColorToDisabled()
+{
+SpriteRenderer[] sprites = this.GetComponentsInChildren<SpriteRenderer>();
+sprites[0].color = new Color (0.5f, 0.5f, 0.5f, 1);
+}
 }

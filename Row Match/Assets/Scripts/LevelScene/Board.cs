@@ -54,6 +54,7 @@ public sealed class Board : MonoBehaviour
         if (moveCounter.currentMoveCount <= 0)
         {
             DisableSwiping();
+            SaveLevelInfo();
             Invoke("QuitLevel", 5);
 
         }
@@ -67,7 +68,7 @@ public sealed class Board : MonoBehaviour
                 allTiles[i, j].GetComponent<Tile>().canSwipe = false;
     }
 
-    private void QuitLevel()
+    private void SaveLevelInfo()
     {
         LevelScoreInfo currentLevelInfo = DataSaver.LoadLevelInfo(currentLevel);
         if (scoreCounter.currentScore > currentLevelInfo.highScore)
@@ -83,8 +84,10 @@ public sealed class Board : MonoBehaviour
 
         LevelScoreInfo nextLevelInfo = DataSaver.LoadLevelInfo(currentLevel + 1);
         DataSaver.SaveLevelInfo(nextLevelInfo.levelNo, nextLevelInfo.highScore, true);
+    }
 
-
+    private void QuitLevel()
+    {
         SceneProvider.GetInstance().LoadInitialScene();
     }
 
