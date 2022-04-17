@@ -411,10 +411,6 @@ MonoBehaviour:
   - {fileID: 4900000, guid: cb524d8c0a6644a71869ee29126deb8e, type: 3}
   - {fileID: 4900000, guid: 80465a72992034c47b9e7f0b6ba2bdda, type: 3}
   - {fileID: 4900000, guid: e4d32b4e294b8470b88ddc474339db32, type: 3}
-  levelTypes:
-  - A
-  - B
-  levelCounts: 0f0000000a000000
 --- !u!4 &637511768
 Transform:
   m_ObjectHideFlags: 0
@@ -685,8 +681,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1322604267}
   duration: 0.5
-  outOfMovesText: {fileID: 2280177300276706771, guid: d886a0d8c42ea44f896f76edbd85c0bf,
-    type: 3}
   currentMoveCount: 0
 --- !u!1 &1624680346
 GameObject:

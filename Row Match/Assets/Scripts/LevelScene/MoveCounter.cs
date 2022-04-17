@@ -63,6 +63,11 @@ public sealed class MoveCounter : MonoBehaviour
 
     private void ShowOutOfMovesText()
     {
+        Vector2 centerBottom = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, 0));
+        WarningBanner banner = Instantiate(Resources.Load<WarningBanner>("WarningBanner"), centerBottom, Quaternion.identity);
+        banner.transform.SetParent(this.transform);
 
+        Vector2 center = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, Screen.height / 2));
+        banner.transform.DOLocalMoveY(Screen.height / 8, 3f).SetEase(Ease.OutBounce);
     }
 }

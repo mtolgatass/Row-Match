@@ -7,10 +7,6 @@ using System;
 
 public sealed class CustomButton : MonoBehaviour
 {
-    void Update()
-    {
-    }
-
     public int index = -1;
     new private string name = "";
 

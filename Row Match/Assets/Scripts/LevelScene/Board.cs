@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine.UI;
+using System;
 
 public sealed class Board : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public sealed class Board : MonoBehaviour
     private List<string> matchedColors = new List<string>();
     private List<string> grid = new List<string>();
     private int rowToAnimate;
+    private int currentLevel;
 
     // MARK: - Public Variables
     public Camera camera;
@@ -32,7 +34,7 @@ public sealed class Board : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int currentLevel = PlayerPrefs.GetInt("selectedLevel");
+        currentLevel = PlayerPrefs.GetInt("selectedLevel");
 
         FetchLevelInfo(currentLevel);
         RepositionCamera();
@@ -52,6 +54,8 @@ public sealed class Board : MonoBehaviour
         if (moveCounter.currentMoveCount <= 0)
         {
             DisableSwiping();
+            Invoke("QuitLevel", 5);
+
         }
     }
 
@@ -62,6 +66,28 @@ public sealed class Board : MonoBehaviour
             for (int j = 0; j < height; j++)
                 allTiles[i, j].GetComponent<Tile>().canSwipe = false;
     }
+
+    private void QuitLevel()
+    {
+        LevelScoreInfo currentLevelInfo = DataSaver.LoadLevelInfo(currentLevel);
+        if (scoreCounter.currentScore > currentLevelInfo.highScore)
+        {
+            DataSaver.SaveLevelInfo(currentLevel, scoreCounter.currentScore, true);
+            PlayerPrefs.SetInt("shouldShowCelebration", Convert.ToInt32(true));
+            Debug.Log("HIGH SCORE!!!");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("shouldShowCelebration", Convert.ToInt32(true));
+        }
+
+        LevelScoreInfo nextLevelInfo = DataSaver.LoadLevelInfo(currentLevel + 1);
+        DataSaver.SaveLevelInfo(nextLevelInfo.levelNo, nextLevelInfo.highScore, true);
+
+
+        SceneProvider.GetInstance().LoadMainScene();
+    }
+
     private void FetchLevelInfo(int levelNo)
     {
         List<int> levelInfo = levelProvider.RequestLevelInfo(levelNo);

@@ -75,8 +75,6 @@ public sealed class EntryScene : MonoBehaviour
                 string results = www.downloadHandler.text;
                 SaveLevel(results, filePath);
 
-                LevelScoreInfo levelInfo = new LevelScoreInfo();
-                levelInfo.levelNo = savedLevelInfoCount;
                 DataSaver.SaveLevelInfo(savedLevelInfoCount, 0, false);
                 savedLevelInfoCount++;
             }
@@ -99,12 +97,8 @@ public sealed class EntryScene : MonoBehaviour
             Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
 
-            Debug.Log(pos);
-            Debug.Log(hitInfo);
-
             if (hitInfo)
             {
-                Debug.Log("IM HERE");
                 ButtonOnClick();
             }
         }

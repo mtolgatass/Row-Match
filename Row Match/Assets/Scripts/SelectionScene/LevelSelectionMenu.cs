@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public sealed class LevelSelectionMenu : MonoBehaviour
 {
@@ -15,11 +16,21 @@ public sealed class LevelSelectionMenu : MonoBehaviour
         PlaceBanner();
         levelCount = 25;
         CreateButtons();
+        ShowCelebrationPopup();
     }
 
     void Update()
     {
         CheckForInput();
+    }
+
+    private void ShowCelebrationPopup()
+    {
+        bool shouldShowCelebration = Convert.ToBoolean(PlayerPrefs.GetInt("shouldShowCelebration"));
+        if (shouldShowCelebration)
+        {
+            //TODO
+        }
     }
 
     private void PlaceBanner()
@@ -53,18 +64,9 @@ public sealed class LevelSelectionMenu : MonoBehaviour
 
     private void ButtonOnClick(int index)
     {
-        Debug.Log("IM HEREEE: " + index);
-
-        if (index == 0)
-        {
-            DataSaver.SaveLevelInfo(index, 0, true);
-        }
-
         PlayerPrefs.SetInt("selectedLevel", index);
-
         SceneProvider.GetInstance().LoadLevelScene();
     }
-
 
 
     private void CheckForInput()
@@ -73,8 +75,6 @@ public sealed class LevelSelectionMenu : MonoBehaviour
         {
             Vector2 pos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             RaycastHit2D hitInfo = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(pos), Vector2.zero);
-
-            Debug.Log(pos);
 
             if (hitInfo)
             {
@@ -86,7 +86,6 @@ public sealed class LevelSelectionMenu : MonoBehaviour
                     {
                         if (colliderHit.name == button.GetComponent<BoxCollider2D>().name)
                         {
-                            Debug.Log("Hit button with index: " + button.index);
                             ButtonOnClick(button.index);
                         }
                     }

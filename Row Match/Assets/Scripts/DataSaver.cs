@@ -45,7 +45,6 @@ public class DataSaver : MonoBehaviour
         try
         {
             File.WriteAllBytes(tempPath, jsonByte);
-            Debug.Log("Saved Data to: " + tempPath.Replace("/", "\\"));
         }
         catch (Exception e)
         {
@@ -78,7 +77,6 @@ public class DataSaver : MonoBehaviour
         try
         {
             jsonByte = File.ReadAllBytes(tempPath);
-            Debug.Log("Loaded Data from: " + tempPath.Replace("/", "\\"));
         }
         catch (Exception e)
         {
