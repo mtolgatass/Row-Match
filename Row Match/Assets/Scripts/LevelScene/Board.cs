@@ -57,7 +57,6 @@ public sealed class Board : MonoBehaviour
             DisableSwiping();
             SaveLevelInfo();
             Invoke("QuitLevel", 5);
-
         }
     }
 
