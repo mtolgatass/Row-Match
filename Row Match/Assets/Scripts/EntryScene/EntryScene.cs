@@ -22,7 +22,6 @@ public sealed class EntryScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //ShowCelebrationPopup();
         RequestButton();
         StartDownloadingLevels();
     }
@@ -106,25 +105,5 @@ public sealed class EntryScene : MonoBehaviour
                 ButtonOnClick();
             }
         }
-    }
-
-    private void ShowCelebrationPopup()
-    {
-        //bool shouldShowCelebration = Convert.ToBoolean(PlayerPrefs.GetInt("shouldShowCelebration"));
-        //if (shouldShowCelebration)
-        //{
-        Vector2 startingPoint = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
-        Vector2 center = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, 0));
-        CelebrationPopup popup = Instantiate(Resources.Load<CelebrationPopup>("CelebrationPopup"), startingPoint, Quaternion.identity);
-        popup.transform.SetParent(this.transform);
-
-        //popup.GetComponentInChildren<SpriteRenderer>().sortingOrder = 2;
-        //popup.GetComponentInChildren<TextMeshPro>().sortingOrder = 2;
-
-        //Vector2 center = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width / 2, Screen.height / 2));
-        //popup.transform
-        //    .DOLocalMoveY(Screen.height / 8, 3f)
-        //    .SetEase(Ease.OutBounce);
-        //}
     }
 }

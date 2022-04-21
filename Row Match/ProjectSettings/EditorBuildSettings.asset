@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelScene.unity
     guid: 42d0aa9bdc62243be9ac1b85b31721f0
+  - enabled: 1
+    path: Assets/Scenes/CelebrationScene.unity
+    guid: be9d49471584b4f90bf90079e130c4af
   m_configObjects: {}

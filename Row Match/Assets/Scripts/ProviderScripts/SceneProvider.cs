@@ -33,4 +33,9 @@ public sealed class SceneProvider
     {
         LoadScene(2);
     }
+
+    public void LoadCelebrationScene()
+    {
+        LoadScene(3);
+    }
 }

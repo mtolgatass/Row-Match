@@ -15,6 +15,7 @@ public sealed class Board : MonoBehaviour
     private List<string> grid = new List<string>();
     private int rowToAnimate;
     private int currentLevel;
+    private bool shouldShowCelebration = false;
 
     // MARK: - Public Variables
     public Camera camera;
@@ -74,12 +75,12 @@ public sealed class Board : MonoBehaviour
         if (scoreCounter.currentScore > currentLevelInfo.highScore)
         {
             DataSaver.SaveLevelInfo(currentLevel, scoreCounter.currentScore, true);
-            PlayerPrefs.SetInt("shouldShowCelebration", Convert.ToInt32(true));
+            shouldShowCelebration = true;
             Debug.Log("HIGH SCORE!!!");
         }
         else
         {
-            PlayerPrefs.SetInt("shouldShowCelebration", Convert.ToInt32(true));
+            shouldShowCelebration = false;
         }
 
         LevelScoreInfo nextLevelInfo = DataSaver.LoadLevelInfo(currentLevel + 1);
@@ -88,7 +89,14 @@ public sealed class Board : MonoBehaviour
 
     private void QuitLevel()
     {
-        SceneProvider.GetInstance().LoadInitialScene();
+        if (shouldShowCelebration)
+        {
+            SceneProvider.GetInstance().LoadCelebrationScene();
+        }
+        else
+        {
+            SceneProvider.GetInstance().LoadInitialScene();
+        }
     }
 
     private void FetchLevelInfo(int levelNo)
